@@ -10,6 +10,7 @@
 #import "SocketByCController.h"
 #import "SocketByCocoaAsyncSocketController.h"
 #import "CocoaAsyncSocketWithHttpController.h"
+#import "CocoaAsyncSocketWithHttpsController.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -32,7 +33,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    _dataArr = @[@"SocketByCController",@"SocketByCocoaAsyncSocketController",@"CocoaAsyncSocketWithHttpController",@"ResumeMultiDownloadController"];
+    _dataArr = @[@"SocketByCController",@"SocketByCocoaAsyncSocketController",@"CocoaAsyncSocketWithHttpController",@"CocoaAsyncSocketWithHttpsController"];
     
     CGRect frame = self.view.bounds;
     frame.size.height -= 64;
@@ -75,7 +76,8 @@
         CocoaAsyncSocketWithHttpController * vc = [[CocoaAsyncSocketWithHttpController alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row == 3){
-        
+        CocoaAsyncSocketWithHttpsController * vc = [[CocoaAsyncSocketWithHttpsController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row == 4){
         
     }

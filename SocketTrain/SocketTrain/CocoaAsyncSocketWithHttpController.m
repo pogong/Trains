@@ -22,7 +22,7 @@
     // Do any additional setup after loading the view from its nib.
     
     _socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    BOOL result = [_socket connectToHost:@"127.0.0.1" onPort:80 error:nil];
+    BOOL result = [_socket connectToHost:@"www.baidu.com" onPort:80 error:nil];
     if (result) {
         NSLog(@"连接成功");
     }else{
@@ -33,8 +33,8 @@
 }
 
 - (IBAction)sendAct:(UIButton *)sender{
-    NSString * reqest = @"GET /zc.json HTTP/1.1\r\n"
-                         "Host: 127.0.0.1\r\n"
+    NSString * reqest = @"GET / HTTP/1.1\r\n"
+                         "Host: www.baidu.com\r\n"
                          "Connection: close\r\n\r\n";
     NSData * data = [reqest dataUsingEncoding:NSUTF8StringEncoding];
     [_socket writeData:data withTimeout:-1 tag:110];;

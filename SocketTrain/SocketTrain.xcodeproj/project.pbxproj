@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D45B7E81FDFD329004DEBA0 /* client.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 4D45B7E71FDFD329004DEBA0 /* client.p12 */; };
 		4D87E5AF1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D87E5AD1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.m */; };
 		4D87E5B01FDE713D0067006C /* CocoaAsyncSocketWithHttpController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D87E5AE1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.xib */; };
 		4D87E5B41FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D87E5B21FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.m */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D45B7E71FDFD329004DEBA0 /* client.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = client.p12; sourceTree = "<group>"; };
 		4D87E5AC1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocoaAsyncSocketWithHttpController.h; sourceTree = "<group>"; };
 		4D87E5AD1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CocoaAsyncSocketWithHttpController.m; sourceTree = "<group>"; };
 		4D87E5AE1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CocoaAsyncSocketWithHttpController.xib; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				4D87E5AC1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.h */,
 				4D87E5AD1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.m */,
 				4D87E5AE1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.xib */,
+				4D45B7E71FDFD329004DEBA0 /* client.p12 */,
 				4D87E5B11FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.h */,
 				4D87E5B21FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.m */,
 				4D87E5B31FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.xib */,
@@ -217,6 +220,7 @@
 				A31489E71FD38D9800B878B7 /* Main.storyboard in Resources */,
 				A3148A171FD38ED700B878B7 /* SocketByCocoaAsyncSocketController.xib in Resources */,
 				A3148A121FD38EC100B878B7 /* SocketByCController.xib in Resources */,
+				4D45B7E81FDFD329004DEBA0 /* client.p12 in Resources */,
 				4D87E5B01FDE713D0067006C /* CocoaAsyncSocketWithHttpController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
