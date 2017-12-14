@@ -20,29 +20,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    _socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    BOOL result = [_socket connectToHost:@"127.0.0.1" onPort:443 error:nil];
-    if (result) {
-        NSLog(@"连接成功");
-    }else{
-        NSLog(@"连接失败");
-    }
-    
-//    [self startTLS_1];
-    
-    [_socket readDataWithTimeout:-1 tag:110];
+
+    [self startGCDAsyncSocketOnTLS];
     
 }
 
+- (void)startGCDAsyncSocketOnTLS{
+    _socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    if(![_socket connectToHost:@"127.0.0.1" onPort:443 withTimeout:30 error:nil]){
+        NSLog(@"连接失败");
+    }else{
+        NSMutableDictionary *settings = [[NSMutableDictionary alloc] init];
+        
+        [settings setObject:[NSNumber numberWithBool:YES]
+                     forKey:GCDAsyncSocketManuallyEvaluateTrust];
+        
+        [_socket startTLS:settings];
+        
+        [_socket readDataWithTimeout:-1 tag:110];
+        
+    }
+}
+
 - (IBAction)sendAct:(UIButton *)sender{
-    
-    /*
-     GET /zc.json HTTP/1.1
-     Host: 127.0.0.1
-     Connection: keep-alive
-     */
-    
     NSString * reqest = @"GET /zc.json HTTP/1.1\r\n"
     "Host: 127.0.0.1\r\n"
     "Connection: close\r\n\r\n";
@@ -90,76 +90,48 @@
     [_socket readDataWithTimeout:-1 tag:110];
 }
 
-- (void)startTLS_1{
-    //HTTPS
-    NSMutableDictionary *sslSettings = [[NSMutableDictionary alloc] init];
-    NSData *pkcs12data = [[NSData alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"client" ofType:@"p12"]];//已经支持https的网站会有CA证书，给服务器要一个导出的p12格式证书
-    CFDataRef inPKCS12Data = (CFDataRef)CFBridgingRetain(pkcs12data);
-    CFStringRef password = CFSTR("");//这里填写上面p12文件的密码
-    const void *keys[] = { kSecImportExportPassphrase };
-    const void *values[] = { password };
-    CFDictionaryRef options = CFDictionaryCreate(NULL, keys, values, 1, NULL, NULL);
+- (void)socket:(GCDAsyncSocket *)sock didReceiveTrust:(SecTrustRef)trust completionHandler:(void (^)(BOOL shouldTrustPeer))completionHandler {
+    NSLog(@"didReceiveTrust");
     
-    CFArrayRef items = CFArrayCreate(NULL, 0, 0, NULL);
+    //server certificate
+    SecCertificateRef serverCertificate = SecTrustGetCertificateAtIndex(trust, 0);
+    CFDataRef serverCertificateData = SecCertificateCopyData(serverCertificate);
     
-    OSStatus securityError = SecPKCS12Import(inPKCS12Data, options, &items);
-    CFRelease(options);
-    CFRelease(password);
+    const UInt8* const serverData = CFDataGetBytePtr(serverCertificateData);
+    const CFIndex serverDataSize = CFDataGetLength(serverCertificateData);
+    NSData* cert1 = [NSData dataWithBytes:serverData length:(NSUInteger)serverDataSize];
     
-    if (securityError == errSecSuccess) {
-        NSLog(@"Success opening p12 certificate.");
+    
+    //local certificate
+    NSString *localCertFilePath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];
+    NSData *localCertData = [NSData dataWithContentsOfFile:localCertFilePath];
+    CFDataRef myCertData = (__bridge CFDataRef)localCertData;
+    
+    
+    const UInt8* const localData = CFDataGetBytePtr(myCertData);
+    const CFIndex localDataSize = CFDataGetLength(myCertData);
+    NSData* cert2 = [NSData dataWithBytes:localData length:(NSUInteger)localDataSize];
+    
+    
+    if (cert1 == nil || cert2 == nil) {
+        NSLog(@"Certificate NULL");
+        completionHandler(NO);
+        return;
     }
     
-    CFDictionaryRef identityDict = CFArrayGetValueAtIndex(items, 0);
-    SecIdentityRef myIdent = (SecIdentityRef)CFDictionaryGetValue(identityDict, kSecImportItemIdentity);
-    SecIdentityRef  certArray[1] = { myIdent };
-    CFArrayRef myCerts = CFArrayCreate(NULL, (void *)certArray, 1, NULL);
-    [sslSettings setObject:(id)CFBridgingRelease(myCerts) forKey:(NSString *)kCFStreamSSLCertificates];
-    [sslSettings setObject:@"127.0.0.1" forKey:(NSString *)kCFStreamSSLPeerName];
-    [sslSettings setObject:@"1" forKey:GCDAsyncSocketUseCFStreamForTLS];
-    [_socket startTLS:sslSettings];//最后调用一下GCDAsyncSocket这个方法进行ssl设置就Ok了
-}
-
-- (void)startTLS_2{
     
-    NSMutableDictionary *sslSettings = [[NSMutableDictionary alloc] init];
+    const BOOL equal = [cert1 isEqualToData:cert2];
     
-    // SSL 证书
-    NSData *pkcs12data = [[NSData alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"client" ofType:@"p12"]];
-    
-    CFDataRef inPKCS12Data = (CFDataRef)CFBridgingRetain(pkcs12data);
-    
-    // c语言字符串
-    CFStringRef password = CFSTR("");
-    
-    const void *keys[] = { kSecImportExportPassphrase };
-    
-    const void *values[] = { password };
-    
-    CFDictionaryRef options = CFDictionaryCreate(NULL, keys, values, 1, NULL, NULL);
-    
-    CFArrayRef items = CFArrayCreate(NULL, 0, 0, NULL);
-    
-    OSStatus securityError = SecPKCS12Import(inPKCS12Data, options, &items);
-    CFRelease(options);
-    CFRelease(password);
-    
-    if(securityError == errSecSuccess)
-        NSLog(@"Success opening p12 certificate.");
-    
-    CFDictionaryRef identityDict = CFArrayGetValueAtIndex(items, 0);
-    SecIdentityRef myIdent = (SecIdentityRef)CFDictionaryGetValue(identityDict,
-                                                                  kSecImportItemIdentity);
-    
-    SecIdentityRef  certArray[1] = { myIdent };
-    CFArrayRef myCerts = CFArrayCreate(NULL, (void *)certArray, 1, NULL);
-    
-    [sslSettings setObject:(id)CFBridgingRelease(myCerts) forKey:(NSString *)kCFStreamSSLCertificates];
-    [sslSettings setObject:NSStreamSocketSecurityLevelNegotiatedSSL forKey:(NSString *)kCFStreamSSLLevel];
-    [sslSettings setObject:@"127.0.0.1" forKey:(NSString *)kCFStreamSSLPeerName];
-    [sslSettings setObject:@"1" forKey:GCDAsyncSocketUseCFStreamForTLS];
-    // 此方法是GCDScoket 设置ssl验证的唯一方法,需要穿字典
-    [_socket startTLS:sslSettings];
+    if (equal) {
+        
+        NSLog(@"Certificate match");
+        completionHandler(YES);
+        
+    }else{
+        
+        NSLog(@"Certificate not match");
+        completionHandler(NO);
+    }
 }
 
 @end

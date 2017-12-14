@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SocketTrain/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-            timestampString = "534765778.466153"
+            timestampString = "534934002.124288"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "7228"
@@ -26,39 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SocketTrain/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-            timestampString = "534765778.466567"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "7933"
-            endingLineNumber = "7933"
-            landmarkName = "-ssl_startTLS"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SocketTrain/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-            timestampString = "534765778.466883"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "7977"
-            endingLineNumber = "7977"
-            landmarkName = "-ssl_continueSSLHandshake"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SocketTrain/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-            timestampString = "534765778.467192"
+            timestampString = "534934002.125001"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "8402"

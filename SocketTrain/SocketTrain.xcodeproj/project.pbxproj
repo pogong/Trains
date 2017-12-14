@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D45B7E81FDFD329004DEBA0 /* client.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 4D45B7E71FDFD329004DEBA0 /* client.p12 */; };
 		4D87E5AF1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D87E5AD1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.m */; };
 		4D87E5B01FDE713D0067006C /* CocoaAsyncSocketWithHttpController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D87E5AE1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.xib */; };
 		4D87E5B41FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D87E5B21FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.m */; };
 		4D87E5B51FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D87E5B31FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.xib */; };
+		4DDE98931FE26F2A0004F5ED /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 4DDE98921FE26F290004F5ED /* server.cer */; };
 		A31489DE1FD38D9800B878B7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A31489DD1FD38D9800B878B7 /* main.m */; };
 		A31489E11FD38D9800B878B7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A31489E01FD38D9800B878B7 /* AppDelegate.m */; };
 		A31489E41FD38D9800B878B7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A31489E31FD38D9800B878B7 /* ViewController.m */; };
@@ -29,13 +29,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4D45B7E71FDFD329004DEBA0 /* client.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = client.p12; sourceTree = "<group>"; };
 		4D87E5AC1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocoaAsyncSocketWithHttpController.h; sourceTree = "<group>"; };
 		4D87E5AD1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CocoaAsyncSocketWithHttpController.m; sourceTree = "<group>"; };
 		4D87E5AE1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CocoaAsyncSocketWithHttpController.xib; sourceTree = "<group>"; };
 		4D87E5B11FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocoaAsyncSocketWithHttpsController.h; sourceTree = "<group>"; };
 		4D87E5B21FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CocoaAsyncSocketWithHttpsController.m; sourceTree = "<group>"; };
 		4D87E5B31FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CocoaAsyncSocketWithHttpsController.xib; sourceTree = "<group>"; };
+		4DDE98921FE26F290004F5ED /* server.cer */ = {isa = PBXFileReference; lastKnownFileType = file; name = server.cer; path = ../../HttpsTrain/HttpsTrain/server.cer; sourceTree = "<group>"; };
 		A31489D91FD38D9800B878B7 /* SocketTrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocketTrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A31489DD1FD38D9800B878B7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A31489DF1FD38D9800B878B7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 				4D87E5AC1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.h */,
 				4D87E5AD1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.m */,
 				4D87E5AE1FDE713D0067006C /* CocoaAsyncSocketWithHttpController.xib */,
-				4D45B7E71FDFD329004DEBA0 /* client.p12 */,
+				4DDE98921FE26F290004F5ED /* server.cer */,
 				4D87E5B11FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.h */,
 				4D87E5B21FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.m */,
 				4D87E5B31FDE7B6B0067006C /* CocoaAsyncSocketWithHttpsController.xib */,
@@ -219,8 +219,8 @@
 				A31489E91FD38D9800B878B7 /* Assets.xcassets in Resources */,
 				A31489E71FD38D9800B878B7 /* Main.storyboard in Resources */,
 				A3148A171FD38ED700B878B7 /* SocketByCocoaAsyncSocketController.xib in Resources */,
+				4DDE98931FE26F2A0004F5ED /* server.cer in Resources */,
 				A3148A121FD38EC100B878B7 /* SocketByCController.xib in Resources */,
-				4D45B7E81FDFD329004DEBA0 /* client.p12 in Resources */,
 				4D87E5B01FDE713D0067006C /* CocoaAsyncSocketWithHttpController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
