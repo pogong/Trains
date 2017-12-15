@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+            timestampString = "535013658.410349"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "5529"
+            endingLineNumber = "5529"
+            landmarkName = "-doReadData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+            timestampString = "535013658.410843"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "5521"
+            endingLineNumber = "5521"
+            landmarkName = "-doReadData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+            timestampString = "535013658.411152"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "7791"
+            endingLineNumber = "7791"
+            landmarkName = "-createReadAndWriteStream"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GCDAsyncSocket createReadAndWriteStream]"
+                  moduleName = "ServerAsncSocket"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shendou/Desktop/Stream%20and%20Socket%20Learn/IM_PacketHandle-master/ServerAsncSocket/Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+                  timestampString = "535013658.453317"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "7793"
+                  endingLineNumber = "7793"
+                  offsetFromSymbolStart = "23">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GCDAsyncSocket createReadAndWriteStream]"
+                  moduleName = "ServerAsncSocket"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shendou/Desktop/Stream%20and%20Socket%20Learn/IM_PacketHandle-master/ServerAsncSocket/Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+                  timestampString = "535013658.45616"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "7793"
+                  endingLineNumber = "7793"
+                  offsetFromSymbolStart = "75">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+            timestampString = "535013658.41144"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "7853"
+            endingLineNumber = "7853"
+            landmarkName = "-registerForStreamCallbacksIncludingReadWrite:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GCDAsyncSocket registerForStreamCallbacksIncludingReadWrite:]"
+                  moduleName = "ServerAsncSocket"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shendou/Desktop/Stream%20and%20Socket%20Learn/IM_PacketHandle-master/ServerAsncSocket/Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+                  timestampString = "535013658.460054"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "7855"
+                  endingLineNumber = "7855"
+                  offsetFromSymbolStart = "33">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GCDAsyncSocket registerForStreamCallbacksIncludingReadWrite:]"
+                  moduleName = "ServerAsncSocket"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shendou/Desktop/Stream%20and%20Socket%20Learn/IM_PacketHandle-master/ServerAsncSocket/Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+                  timestampString = "535013658.461585"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "7855"
+                  endingLineNumber = "7855"
+                  offsetFromSymbolStart = "85">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
