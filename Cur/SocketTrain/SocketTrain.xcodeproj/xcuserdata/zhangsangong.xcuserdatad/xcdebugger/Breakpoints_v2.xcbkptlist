@@ -9,22 +9,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SocketTrain/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-            timestampString = "533971822.591223"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "6264"
-            endingLineNumber = "6264"
-            landmarkName = "-doReadEOF"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "SocketTrain/SocketByCocoaAsyncSocketController.m"
             timestampString = "533960252.002169"
             startingColumnNumber = "9223372036854775807"
@@ -47,23 +31,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "6683"
             endingLineNumber = "6683"
-            landmarkName = "-doWriteData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SocketTrain/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-            timestampString = "533972549.102543"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "5512"
-            endingLineNumber = "5512"
-            landmarkName = "-doReadData"
+            landmarkName = "-doReadEOF"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -79,7 +47,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "5734"
             endingLineNumber = "5734"
-            landmarkName = "-doReadData"
+            landmarkName = "-zc_doReadData_ST"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -95,7 +63,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "5739"
             endingLineNumber = "5739"
-            landmarkName = "-doReadData"
+            landmarkName = "-zc_doReadData_ST"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -111,7 +79,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "8062"
             endingLineNumber = "8062"
-            landmarkName = "-ssl_shouldTrustPeer:stateIndex:"
+            landmarkName = "-ssl_startTLS"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

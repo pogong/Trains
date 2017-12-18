@@ -6178,7 +6178,7 @@ enum GCDAsyncSocketConfig
 				// - how many encypted bytes are sitting in the sslContext
 				//
 				// So we play the regular game of using an upper bound instead.
-				
+                
 				NSUInteger defaultReadLength = (1024 * 32);
 				
 				if (defaultReadLength < estimatedBytesAvailable) {
@@ -6395,6 +6395,7 @@ enum GCDAsyncSocketConfig
 			}
 			else if (currentRead->term != nil)
 			{
+                //zc read:读到边界有可能写入preBuffer,再由preBuffer写入currentRead->buffer;也有可能直接写入currentRead->buffer;
 				// Read type #3 - read up to a terminator
 				
 				if (readIntoPreBuffer)
@@ -6435,7 +6436,14 @@ enum GCDAsyncSocketConfig
 					// We just read a big chunk of data directly into the packet's buffer.
 					// We need to move any overflow into the prebuffer.
 					
-                    NSInteger overflow = [currentRead searchForTermAfterPreBuffering:bytesRead];//zc discover:会溢出的只会发生在读取边界的情况下
+                    //zc read:当前包有边界也可以有可能maxLength;上面的从socket内读取数据的时候并不扫描边界,有maxLength是按maxLength来的;
+                    //1.当我们读数据读至maxLength也达到边界,完美.
+                    //2.当我们读数据读至maxLength却超过了边界,要将超出的数据退给preBuffer.
+                    //3.当我们读数据达到了maxLength却没有读到边界,需要等待.
+                    
+                    //zc read:跟着辉哥的C/S的demo,都是有边界没maxLength的包,所以代码不会跑到这!!!
+                    
+                    NSInteger overflow = [currentRead searchForTermAfterPreBuffering:bytesRead];
 					
 					if (overflow == 0)
 					{
