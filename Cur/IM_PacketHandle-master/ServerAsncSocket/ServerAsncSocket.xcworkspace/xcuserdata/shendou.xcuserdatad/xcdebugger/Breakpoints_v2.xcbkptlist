@@ -10,44 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-            timestampString = "535013658.410349"
+            timestampString = "535361997.881658"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "5529"
-            endingLineNumber = "5529"
-            landmarkName = "-doReadData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-            timestampString = "535013658.410843"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "5521"
-            endingLineNumber = "5521"
-            landmarkName = "-doReadData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-            timestampString = "535013658.411152"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "7791"
-            endingLineNumber = "7791"
-            landmarkName = "-createReadAndWriteStream"
+            startingLineNumber = "8075"
+            endingLineNumber = "8075"
+            landmarkName = "-socket6FD"
             landmarkType = "7">
             <Locations>
                <Location
@@ -57,12 +25,12 @@
                   symbolName = "-[GCDAsyncSocket createReadAndWriteStream]"
                   moduleName = "ServerAsncSocket"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/shendou/Desktop/Stream%20and%20Socket%20Learn/IM_PacketHandle-master/ServerAsncSocket/Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-                  timestampString = "535013658.453317"
+                  urlString = "file:///Users/shendou/Desktop/Trains/Cur/IM_PacketHandle-master/ServerAsncSocket/Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+                  timestampString = "535361997.907567"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "7793"
-                  endingLineNumber = "7793"
+                  startingLineNumber = "8077"
+                  endingLineNumber = "8077"
                   offsetFromSymbolStart = "23">
                </Location>
                <Location
@@ -72,12 +40,12 @@
                   symbolName = "-[GCDAsyncSocket createReadAndWriteStream]"
                   moduleName = "ServerAsncSocket"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/shendou/Desktop/Stream%20and%20Socket%20Learn/IM_PacketHandle-master/ServerAsncSocket/Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-                  timestampString = "535013658.45616"
+                  urlString = "file:///Users/shendou/Desktop/Trains/Cur/IM_PacketHandle-master/ServerAsncSocket/Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+                  timestampString = "535361997.9098"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "7793"
-                  endingLineNumber = "7793"
+                  startingLineNumber = "8077"
+                  endingLineNumber = "8077"
                   offsetFromSymbolStart = "75">
                </Location>
             </Locations>
@@ -90,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-            timestampString = "535013658.41144"
+            timestampString = "535361997.882365"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "7853"
-            endingLineNumber = "7853"
-            landmarkName = "-registerForStreamCallbacksIncludingReadWrite:"
+            startingLineNumber = "8137"
+            endingLineNumber = "8137"
+            landmarkName = "-enableBackgroundingOnSocketWithCaveat:"
             landmarkType = "7">
             <Locations>
                <Location
@@ -105,12 +73,12 @@
                   symbolName = "-[GCDAsyncSocket registerForStreamCallbacksIncludingReadWrite:]"
                   moduleName = "ServerAsncSocket"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/shendou/Desktop/Stream%20and%20Socket%20Learn/IM_PacketHandle-master/ServerAsncSocket/Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-                  timestampString = "535013658.460054"
+                  urlString = "file:///Users/shendou/Desktop/Trains/Cur/IM_PacketHandle-master/ServerAsncSocket/Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+                  timestampString = "535361997.932741"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "7855"
-                  endingLineNumber = "7855"
+                  startingLineNumber = "8139"
+                  endingLineNumber = "8139"
                   offsetFromSymbolStart = "33">
                </Location>
                <Location
@@ -120,15 +88,31 @@
                   symbolName = "-[GCDAsyncSocket registerForStreamCallbacksIncludingReadWrite:]"
                   moduleName = "ServerAsncSocket"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/shendou/Desktop/Stream%20and%20Socket%20Learn/IM_PacketHandle-master/ServerAsncSocket/Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
-                  timestampString = "535013658.461585"
+                  urlString = "file:///Users/shendou/Desktop/Trains/Cur/IM_PacketHandle-master/ServerAsncSocket/Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+                  timestampString = "535361997.936381"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "7855"
-                  endingLineNumber = "7855"
+                  startingLineNumber = "8139"
+                  endingLineNumber = "8139"
                   offsetFromSymbolStart = "85">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m"
+            timestampString = "535361997.882891"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "5842"
+            endingLineNumber = "5842"
+            landmarkName = "-doReadTimeoutWithExtension:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
