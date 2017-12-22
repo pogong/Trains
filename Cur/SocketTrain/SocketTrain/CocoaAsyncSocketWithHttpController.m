@@ -33,11 +33,17 @@
 }
 
 - (IBAction)sendAct:(UIButton *)sender{
+    
+    NSLog(@"%@-%@",_socket.readStream,_socket.writeStream);
+    NSLog(@"---");
+    
+    return;
+    
     NSString * reqest = @"GET / HTTP/1.1\r\n"
                          "Host: www.baidu.com\r\n"
                          "Connection: close\r\n\r\n";
     NSData * data = [reqest dataUsingEncoding:NSUTF8StringEncoding];
-    [_socket writeData:data withTimeout:-1 tag:110];;
+    [_socket writeData:data withTimeout:-1 tag:110];
 }
 
 - (void)receiveAct:(UIButton *)sender{

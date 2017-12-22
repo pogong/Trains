@@ -21,8 +21,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    NSStream
-    
     UIImage * image = [UIImage imageNamed:@"on_show"];
     
     _old_date = UIImagePNGRepresentation(image);

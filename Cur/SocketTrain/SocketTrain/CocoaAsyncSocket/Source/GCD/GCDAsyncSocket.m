@@ -2666,6 +2666,7 @@ enum GCDAsyncSocketConfig
     return YES;
 }
 
+//zc to do:connectInterface是给客户端用的
 - (int)createSocket:(int)family connectInterface:(NSData *)connectInterface errPtr:(NSError **)errPtr
 {
     //zc read1:创建socket
@@ -3026,6 +3027,7 @@ enum GCDAsyncSocketConfig
 
 	if (delegateQueue && host != nil && [theDelegate respondsToSelector:@selector(socket:didConnectToHost:port:)])
 	{
+        //zc to do:疑问 不用CFSteam for TLS,也初始化两个CFSteam???
 		SetupStreamsPart1();
 		
         //zc read:delegateQueue与socketQueue的分工可见一斑
@@ -3037,6 +3039,9 @@ enum GCDAsyncSocketConfig
 				
 				SetupStreamsPart2();
 			}});
+            
+            NSLog(@"%@-%@",readStream,writeStream);
+            NSLog(@"---");
 		}});
 	}
 	else if (delegateQueue && url != nil && [theDelegate respondsToSelector:@selector(socket:didConnectToUrl:)])
@@ -6491,7 +6496,7 @@ enum GCDAsyncSocketConfig
 				// We always set waiting to true in this scenario.
 				// CFStream may have altered our underlying socket to non-blocking.
 				// Thus if we attempt to write without a callback, we may end up blocking our queue.
-				waiting = YES;
+                waiting = YES;//zc read:CFStream内部会调用socket传输数据,所以CFStream的写非常简单,只是写入CFStream就好了.
 			}
 			
 			#endif
@@ -6615,7 +6620,7 @@ enum GCDAsyncSocketConfig
 						if (result == errSSLWouldBlock)
 						{
 							waiting = YES;
-							sslWriteCachedLength = sslBytesToWrite;
+							sslWriteCachedLength = sslBytesToWrite;//没写给对面,写入了sslContext内,需要记录sslWriteCachedLength
 						}
 						else
 						{
