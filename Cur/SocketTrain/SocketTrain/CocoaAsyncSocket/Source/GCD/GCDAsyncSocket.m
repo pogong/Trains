@@ -2666,7 +2666,7 @@ enum GCDAsyncSocketConfig
     return YES;
 }
 
-//zc to do:connectInterface是给客户端用的
+//zc read:connectInterface是给客户端用的
 - (int)createSocket:(int)family connectInterface:(NSData *)connectInterface errPtr:(NSError **)errPtr
 {
     //zc read1:创建socket
@@ -3027,7 +3027,6 @@ enum GCDAsyncSocketConfig
 
 	if (delegateQueue && host != nil && [theDelegate respondsToSelector:@selector(socket:didConnectToHost:port:)])
 	{
-        //zc to do:疑问 不用CFSteam for TLS,也初始化两个CFSteam???
 		SetupStreamsPart1();
 		
         //zc read:delegateQueue与socketQueue的分工可见一斑

@@ -31,7 +31,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "6683"
             endingLineNumber = "6683"
-            landmarkName = "-doReadEOF"
+            landmarkName = "-doWriteData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -47,7 +47,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "5734"
             endingLineNumber = "5734"
-            landmarkName = "-zc_doReadData_ST"
+            landmarkName = "-doReadData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -63,7 +63,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "5739"
             endingLineNumber = "5739"
-            landmarkName = "-zc_doReadData_ST"
+            landmarkName = "-doReadData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -79,8 +79,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "8062"
             endingLineNumber = "8062"
-            landmarkName = "-ssl_startTLS"
-            landmarkType = "7">
+            landmarkName = "CFReadStreamCallback"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
