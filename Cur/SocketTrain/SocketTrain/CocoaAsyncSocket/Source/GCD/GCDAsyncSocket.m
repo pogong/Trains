@@ -4808,6 +4808,11 @@ enum GCDAsyncSocketConfig
             /*
              调用SSLRead,内部会自动注册好的SSLReadFunction,读出加密数据
              SSLRead内部会加密数据解密然后传出
+             
+             sslContext==>上下文
+             buffer==>[preBuffer writeBuffer]
+             estimatedBytesAvailable==>预估大小,preBuffer已经为此扩容了
+             &bytesRead==>真正写入大小的指针
              */
             OSStatus result = SSLRead(sslContext, buffer, (size_t)estimatedBytesAvailable, &bytesRead);
 			LogVerbose(@"%@ - read from secure socket = %u", THIS_METHOD, (unsigned)bytesRead);
@@ -5563,20 +5568,30 @@ enum GCDAsyncSocketConfig
 				// However, starting around 10.7, the function will sometimes return noErr,
 				// even if it didn't read as much data as requested. So we need to watch out for that.
 				
+                //zc to do:
+                NSLog(@"Using SecureTransport for TLS 循环开始 socket有加密数据==>%zd",socketFDBytesAvailable);
 				OSStatus result;
 				do
 				{
+                    /*
+                     bytesToRead==>预估读取长度
+                     bytesRead==>真实累计读取长度
+                     */
+                    
 					void *loop_buffer = buffer + bytesRead;
 					size_t loop_bytesToRead = (size_t)bytesToRead - bytesRead;
 					size_t loop_bytesRead = 0;
-					
+                    
+                    //zc focus:
+                    NSLog(@"Using SecureTransport for TLS SSLRead开始 预估读取长度==%zd",loop_bytesToRead);
 					result = SSLRead(sslContext, loop_buffer, loop_bytesToRead, &loop_bytesRead);
-					LogVerbose(@"read from secure socket = %u", (unsigned)loop_bytesRead);
 					
 					bytesRead += loop_bytesRead;
 					
+                    NSLog(@"Using SecureTransport for TLS SSLRead结束 单次循环真正读取长度==%zd 循环共读出%zd",loop_bytesRead,bytesRead);
+                    
 				} while ((result == noErr) && (bytesRead < bytesToRead));
-				
+                NSLog(@"Using SecureTransport for TLS 循环退出\n");
 				
 				if (result != noErr)
 				{
@@ -5611,31 +5626,31 @@ enum GCDAsyncSocketConfig
 			}
 		}
 		else
-		{
-			// Normal socket operation
-			
-			NSUInteger bytesToRead;
-			
-			// There are 3 types of read packets:
-			//
-			// 1) Read all available data.
-			// 2) Read a specific length of data.
-			// 3) Read up to a particular terminator.
-			//zc read://3种类型的读法，1、全读、2、读取特定长度、3、读取到一个明确的界限(follow hui)
+        {
+            // Normal socket operation
             
-			if (currentRead->term != nil)
-			{
-				// Read type #3 - read up to a terminator
-				//zc read:currentRead->buffer够用就不用preBuffer,否则就用preBuffer
-				bytesToRead = [currentRead readLengthForTermWithHint:estimatedBytesAvailable
-				                                     shouldPreBuffer:&readIntoPreBuffer];
-			}
-			else
-			{
-				// Read type #1 or #2
-				bytesToRead = [currentRead readLengthForNonTermWithHint:estimatedBytesAvailable];
-			}
-			
+            NSUInteger bytesToRead;
+            
+            // There are 3 types of read packets:
+            //
+            // 1) Read all available data.
+            // 2) Read a specific length of data.
+            // 3) Read up to a particular terminator.
+            //zc read://3种类型的读法，1、全读、2、读取特定长度、3、读取到一个明确的界限(follow hui)
+            
+            if (currentRead->term != nil)
+            {
+                // Read type #3 - read up to a terminator
+                //zc read:currentRead->buffer够用就不用preBuffer,否则就用preBuffer
+                bytesToRead = [currentRead readLengthForTermWithHint:estimatedBytesAvailable
+                                                     shouldPreBuffer:&readIntoPreBuffer];
+            }
+            else
+            {
+                // Read type #1 or #2
+                bytesToRead = [currentRead readLengthForNonTermWithHint:estimatedBytesAvailable];
+            }
+            
             /*
              [currentRead readLengthForTermWithHint:estimatedBytesAvailable shouldPreBuffer:&readIntoPreBuffer];
              [currentRead readLengthForNonTermWithHint:estimatedBytesAvailable];
@@ -5644,80 +5659,80 @@ enum GCDAsyncSocketConfig
              如果数据长度不清楚，那么则去判断这一次读取的长度，和currentRead可用空间长度去对比，如果长度比currentRead可用空间小，则流向currentRead，否则先用prebuffer来缓冲.
              */
             
-			if (bytesToRead > SIZE_MAX) { // NSUInteger may be bigger than size_t (read param 3)
-				bytesToRead = SIZE_MAX;
-			}
-			
-			// Make sure we have enough room in the buffer for our read.
-			//
-			// We are either reading directly into the currentRead->buffer,
-			// or we're reading into the temporary preBuffer.
-			
+            if (bytesToRead > SIZE_MAX) { // NSUInteger may be bigger than size_t (read param 3)
+                bytesToRead = SIZE_MAX;
+            }
+            
+            // Make sure we have enough room in the buffer for our read.
+            //
+            // We are either reading directly into the currentRead->buffer,
+            // or we're reading into the temporary preBuffer.
+            
             //zc read:要么写入socket->currentRead->buffer,要么写入socket->preBuffer;socket->currentRead->buffer可能会出现不够的情况,则需要写入socket->preBuffer
             
-			if (readIntoPreBuffer)
-			{
-				[preBuffer ensureCapacityForWrite:bytesToRead];
-				
-				buffer = [preBuffer writeBuffer];
-			}
-			else
-			{
+            if (readIntoPreBuffer)
+            {
+                [preBuffer ensureCapacityForWrite:bytesToRead];
+                
+                buffer = [preBuffer writeBuffer];
+            }
+            else
+            {
                 //zc read:这
-				[currentRead ensureCapacityForAdditionalDataOfLength:bytesToRead];
-				
-				buffer = (uint8_t *)[currentRead->buffer mutableBytes]
-				       + currentRead->startOffset
-				       + currentRead->bytesDone;
-			}
-			
-			// Read data into buffer
-			
-			int socketFD = (socket4FD != SOCKET_NULL) ? socket4FD : (socket6FD != SOCKET_NULL) ? socket6FD : socketUN;
-			
+                [currentRead ensureCapacityForAdditionalDataOfLength:bytesToRead];
+                
+                buffer = (uint8_t *)[currentRead->buffer mutableBytes]
+                + currentRead->startOffset
+                + currentRead->bytesDone;
+            }
+            
+            // Read data into buffer
+            
+            int socketFD = (socket4FD != SOCKET_NULL) ? socket4FD : (socket6FD != SOCKET_NULL) ? socket6FD : socketUN;
+            
             //zc read4:socket读
-			ssize_t result = read(socketFD, buffer, (size_t)bytesToRead);
-			LogVerbose(@"read from socket = %i", (int)result);
-			
+            ssize_t result = read(socketFD, buffer, (size_t)bytesToRead);
+            LogVerbose(@"read from socket = %i", (int)result);
+            
             if (result < 0)//zc read:读取报错 或者 是陷入阻塞
-			{
-				if (errno == EWOULDBLOCK)
-					waiting = YES;
-				else
-					error = [self errnoErrorWithReason:@"Error in read() function"];
-				
-				socketFDBytesAvailable = 0;
-			}
-			else if (result == 0)//zc read:读取结束符
-			{
-				socketEOF = YES;
-				socketFDBytesAvailable = 0;
-			}
-			else                //zc read:读取到正常数据
-			{
-				bytesRead = result;
-				
-				if (bytesRead < bytesToRead)
-				{
-					// The read returned less data than requested.
-					// This means socketFDBytesAvailable was a bit off due to timing,
-					// because we read from the socket right when the readSource event was firing.
-					socketFDBytesAvailable = 0;
-				}
-				else
-				{
-					if (socketFDBytesAvailable <= bytesRead)
-						socketFDBytesAvailable = 0;
-					else
-						socketFDBytesAvailable -= bytesRead;
-				}
-				
-				if (socketFDBytesAvailable == 0)
-				{
-					waiting = YES;
-				}
-			}
-		}
+            {
+                if (errno == EWOULDBLOCK)
+                    waiting = YES;
+                else
+                    error = [self errnoErrorWithReason:@"Error in read() function"];
+                
+                socketFDBytesAvailable = 0;
+            }
+            else if (result == 0)//zc read:读取结束符
+            {
+                socketEOF = YES;
+                socketFDBytesAvailable = 0;
+            }
+            else                //zc read:读取到正常数据
+            {
+                bytesRead = result;
+                
+                if (bytesRead < bytesToRead)
+                {
+                    // The read returned less data than requested.
+                    // This means socketFDBytesAvailable was a bit off due to timing,
+                    // because we read from the socket right when the readSource event was firing.
+                    socketFDBytesAvailable = 0;
+                }
+                else
+                {
+                    if (socketFDBytesAvailable <= bytesRead)
+                        socketFDBytesAvailable = 0;
+                    else
+                        socketFDBytesAvailable -= bytesRead;
+                }
+                
+                if (socketFDBytesAvailable == 0)
+                {
+                    waiting = YES;
+                }
+            }
+        }
 		
 		if (bytesRead > 0)
 		{
@@ -6975,9 +6990,12 @@ enum GCDAsyncSocketConfig
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Security via SecureTransport //zc read:SSL1
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//zc read:sslRead3
+//zc focus:sslRead3
 - (OSStatus)sslReadWithBuffer:(void *)out_pass_buffer length:(size_t *)bufferLength
 {
+    NSLog(@"\n");
+    NSLog(@"Using SecureTransport for TLS 内调方法开始==>out_pass_buffer预备读取大小==%zd",(*bufferLength));
+    
 	LogVerbose(@"sslReadWithBuffer:%p length:%lu", out_pass_buffer, (unsigned long)*bufferLength);
 	
 	if ((socketFDBytesAvailable == 0) && ([sslPreBuffer availableBytes] == 0))
@@ -7009,6 +7027,8 @@ enum GCDAsyncSocketConfig
 	
 	if (sslPreBufferLength > 0)
 	{
+        NSLog(@"Using SecureTransport for TLS ^ READ FROM SSL PRE BUFFER");
+        
 		LogVerbose(@"%@: Reading from SSL pre buffer...", THIS_METHOD);
 		
 		size_t bytesToCopy;
@@ -7038,6 +7058,9 @@ enum GCDAsyncSocketConfig
 	
 	if (!done && (socketFDBytesAvailable > 0))
 	{
+        
+        NSLog(@"Using SecureTransport for TLS ^ READ FROM SOCKET");
+        
 		LogVerbose(@"%@: Reading from socket...", THIS_METHOD);
 		
 		int socketFD = (socket4FD != SOCKET_NULL) ? socket4FD : (socket6FD != SOCKET_NULL) ? socket6FD : socketUN;
@@ -7053,6 +7076,8 @@ enum GCDAsyncSocketConfig
 			
 			LogVerbose(@"%@: Reading into sslPreBuffer...", THIS_METHOD);
 			
+            NSLog(@"Using SecureTransport for TLS ^ READ FROM SOCKET into sslPreBuffer");
+            
 			[sslPreBuffer ensureCapacityForWrite:socketFDBytesAvailable];
 			
 			readIntoPreBuffer = YES;
@@ -7065,12 +7090,15 @@ enum GCDAsyncSocketConfig
 			
 			LogVerbose(@"%@: Reading directly into dataBuffer...", THIS_METHOD);
 			
+            NSLog(@"Using SecureTransport for TLS ^ READ FROM SOCKET into out_pass_buffer");
+            
 			readIntoPreBuffer = NO;
 			bytesToRead = totalBytesLeftToBeRead;
 			buf = (uint8_t *)out_pass_buffer + totalBytesRead;
 		}
-		
+        NSLog(@"zc focus read() 11 %zd",bytesToRead);
 		ssize_t result = read(socketFD, buf, bytesToRead);
+        NSLog(@"zc focus read() 22 %zd",result);
 		LogVerbose(@"%@: read from socket = %zd", THIS_METHOD, result);
 		
 		if (result < 0)
@@ -7130,6 +7158,10 @@ enum GCDAsyncSocketConfig
 	
 	*bufferLength = totalBytesRead;
 	
+    NSLog(@"Using SecureTransport for TLS out_pass_buffer含有长度 %zd",totalBytesRead);
+    NSLog(@"Using SecureTransport for TLS sslPreBuffer含有长度 %zd",[sslPreBuffer availableBytes]);
+    NSLog(@"Using SecureTransport for TLS 内调方法结束\n");
+    
 	if (done)
 		return noErr;
 	
