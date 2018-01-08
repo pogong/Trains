@@ -486,10 +486,7 @@ static __strong NSData *CRLFCRLF;
         _receivedHTTPHeaders = CFHTTPMessageCreateEmpty(NULL, NO);
     }
     
-    NSLog(@"zc read:加消费者");
-    
     [self _readUntilHeaderCompleteWithCallback:^(SRWebSocket *self, NSData *data) {
-        NSLog(@"zc read:_readUntilHeaderCompleteWithCallback triger start");
         CFHTTPMessageAppendBytes(_receivedHTTPHeaders, (const UInt8 *)data.bytes, data.length);
         
         if (CFHTTPMessageIsHeaderComplete(_receivedHTTPHeaders)) {
@@ -498,7 +495,6 @@ static __strong NSData *CRLFCRLF;
         } else {
             [self _readHTTPHeader];
         }
-        NSLog(@"zc read:_readUntilHeaderCompleteWithCallback triger end");
     }];
 }
 
@@ -946,6 +942,7 @@ static inline BOOL closeCodeIsValid(int closeCode) {
             if ([self.delegate respondsToSelector:@selector(webSocketShouldConvertTextFrameToString:)] && ![self.delegate webSocketShouldConvertTextFrameToString:self]) {
                 [self _handleMessage:[frameData copy]];
             } else {
+                NSLog(@"zc read 实体消息 %zd 字节",frameData.length);
                 NSString *str = [[NSString alloc] initWithData:frameData encoding:NSUTF8StringEncoding];
                 if (str == nil && frameData) {
                     [self closeWithCode:SRStatusCodeInvalidUTF8 reason:@"Text frames must be valid UTF-8"];
@@ -988,8 +985,6 @@ static inline BOOL closeCodeIsValid(int closeCode) {
     
     BOOL isControlFrame = (frame_header.opcode == SROpCodePing || frame_header.opcode == SROpCodePong || frame_header.opcode == SROpCodeConnectionClose);
     
-    NSLog(@"%zd",frame_header.opcode);
-    
     if (isControlFrame && !frame_header.fin) {
         [self _closeWithProtocolError:@"Fragmented control frames not allowed"];
         return;
@@ -1020,6 +1015,9 @@ static inline BOOL closeCodeIsValid(int closeCode) {
     } else {
         assert(frame_header.payload_length <= SIZE_T_MAX);
         //zc focus:addConsumer2
+        
+        //现加现用
+        
         [self _addConsumerWithDataLength:(size_t)frame_header.payload_length callback:^(SRWebSocket *self, NSData *data) {
             if (isControlFrame) {
                 [self _handleFrameWithData:data opCode:frame_header.opcode];
@@ -1063,7 +1061,6 @@ static const uint8_t SROpCodeMask       = 0x0F;
 static const uint8_t SRRsvMask          = 0x70;
 static const uint8_t SRMaskMask         = 0x80;
 static const uint8_t SRPayloadLenMask   = 0x7F;
-
 
 - (void)_readFrameContinue;
 {
@@ -1129,7 +1126,7 @@ static const uint8_t SRPayloadLenMask   = 0x7F;
             [self _addConsumerWithDataLength:extra_bytes_needed callback:^(SRWebSocket *self, NSData *data) {
                 size_t mapped_size = data.length;
                 #pragma unused (mapped_size)
-                const void *mapped_buffer = data.bytes;//po [frameData description] <0083> 131
+                const void *mapped_buffer = data.bytes;
                 size_t offset = 0;
                 
                 if (header.payload_length == 126) {
@@ -1159,6 +1156,17 @@ static const uint8_t SRPayloadLenMask   = 0x7F;
 //zc read:准备读内容
 - (void)_readFrameNew;
 {
+//    [_currentFrameData setLength:0];
+//
+//    _currentFrameOpcode = 0;
+//    _currentFrameCount = 0;
+//    _readOpCount = 0;
+//    _currentStringScanPosition = 0;
+//    [self _readFrameContinue];
+//
+//    return;
+//
+    //zc read:'异步'准备下一次调用
     dispatch_async(_workQueue, ^{
         [_currentFrameData setLength:0];
         
@@ -1166,7 +1174,6 @@ static const uint8_t SRPayloadLenMask   = 0x7F;
         _currentFrameCount = 0;
         _readOpCount = 0;
         _currentStringScanPosition = 0;
-        
         [self _readFrameContinue];
     });
 }
@@ -1234,6 +1241,7 @@ static const uint8_t SRPayloadLenMask   = 0x7F;
     assert(dataLength);
     
     [_consumers addObject:[_consumerPool consumerWithScanner:nil handler:callback bytesNeeded:dataLength readToCurrentFrame:readToCurrentFrame unmaskBytes:unmaskBytes]];
+    NSLog(@"zc read:加消费者");
     [self _pumpScanner];
 }
 
@@ -1241,6 +1249,7 @@ static const uint8_t SRPayloadLenMask   = 0x7F;
 {    
     [self assertOnWorkQueue];
     [_consumers addObject:[_consumerPool consumerWithScanner:consumer handler:callback bytesNeeded:dataLength readToCurrentFrame:NO unmaskBytes:NO]];
+    NSLog(@"zc read:加消费者");
     [self _pumpScanner];
 }
 
@@ -1316,8 +1325,11 @@ static const char CRLFCRLFBytes[] = {'\r', '\n', '\r', '\n'};
 
 
 // Returns true if did work
+
+//zc read:读一帧数据调用一次pumpScanner,_innerPumpScanner可能被循环调用多次(最少两次,因为:读数据头+读数据体)
+
 - (BOOL)_innerPumpScanner {
-    NSLog(@"zc read:_innerPumpScanner call");
+    
     BOOL didWork = NO;
     
     if (self.readyState >= SR_CLOSED) {
@@ -1325,28 +1337,40 @@ static const char CRLFCRLFBytes[] = {'\r', '\n', '\r', '\n'};
     }
     
     if (!_consumers.count) {
+        NSLog(@"zc read:_innerPumpScanner stop 1");
         return didWork;
     }
     
     size_t curSize = _readBuffer.length - _readBufferOffset;
     if (!curSize) {
+        NSLog(@"zc read:_innerPumpScanner stop 2");
         return didWork;
     }
     
-    SRIOConsumer *consumer = [_consumers objectAtIndex:0];
     
-    NSLog(@"zc read:SRIOConsumer->tag==>%zd",consumer.tag);
+    SRIOConsumer *consumer = [_consumers objectAtIndex:0];
     
     size_t bytesNeeded = consumer.bytesNeeded;
     
     size_t foundSize = 0;
     if (consumer.edge_consumer) {
+        
+        NSLog(@"-----zc read:_innerPumpScanner预备读http的头");
+        
         NSData *tempView = [NSData dataWithBytesNoCopy:(char *)_readBuffer.bytes + _readBufferOffset length:_readBuffer.length - _readBufferOffset freeWhenDone:NO];  
         foundSize = consumer.edge_consumer(tempView);//zc read:读边界(http返回数据,走这边)
+        
     } else {
         assert(consumer.bytesNeeded);
         if (curSize >= bytesNeeded) {
             foundSize = bytesNeeded;//zc read:读定长
+            
+            if (foundSize == 2){
+                NSLog(@"-----zc read:_innerPumpScanner预备读数据头");
+            }else{
+                NSLog(@"-----zc read:_innerPumpScanner预备读数据体");
+            }
+            
         } else if (consumer.readToCurrentFrame) {
             foundSize = curSize;//zc read:全读(基本不会出现)
         }
@@ -1433,12 +1457,17 @@ static const char CRLFCRLFBytes[] = {'\r', '\n', '\r', '\n'};
     if (!_isPumping) {
         _isPumping = YES;
     } else {
+        NSLog(@"zc read:_pumpScanner funcing so return");
         return;
     }
+    
+    NSLog(@"---------------zc runloop in");
     
     while ([self _innerPumpScanner]) {
         
     }
+    
+    NSLog(@"---------------zc runloop out");
     
     _isPumping = NO;
 }
@@ -1590,8 +1619,8 @@ static const size_t SRFrameHeaderOverhead = 32;
                 if ((!_secure || !usingPinnedCerts) && self.readyState == SR_CONNECTING && aStream == _inputStream) {
                     [self didConnect];
                 }
-                [self _pumpWriting];
-                [self _pumpScanner];//zc read:没数据可读,调用_pumpScanner,中途就会return
+//                [self _pumpWriting];
+//                [self _pumpScanner];//zc read:没数据可读,调用_pumpScanner,中途就会return
                 break;
             }
                 
@@ -1654,7 +1683,7 @@ static const size_t SRFrameHeaderOverhead = 32;
                     }
                 };
                 
-                NSLog(@"zc read 有数据来了 %zd",_readBuffer.length - _readBufferOffset);
+                NSLog(@"zc read 有数据来了 一共 %zd 字节",_readBuffer.length - _readBufferOffset);
                 //zc read:数据来了先写入_readBuffer,在进行后续的读写操作
                 [self _pumpScanner];
                 break;
@@ -1729,10 +1758,8 @@ static NSInteger zc_tag = 0;
         [_bufferedConsumers removeLastObject];
     } else {
         consumer = [[SRIOConsumer alloc] init];
-        NSLog(@"zc read:zc_tag==>%zd",zc_tag);
         zc_tag++;
         consumer.tag = zc_tag;
-        NSLog(@"zc read:新建consumer==>%zd",consumer.tag);
     }
     
     [consumer setupWithScanner:scanner handler:handler bytesNeeded:bytesNeeded readToCurrentFrame:readToCurrentFrame unmaskBytes:unmaskBytes];
