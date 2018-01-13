@@ -118,7 +118,6 @@ static const uint16_t Kport = 6969;
 //断开连接
 - (void)disConnect
 {
-    
     if (webSocket) {
         [webSocket closeWithCode:disConnectByUser reason:@"用户主动断开"];
         webSocket = nil;
