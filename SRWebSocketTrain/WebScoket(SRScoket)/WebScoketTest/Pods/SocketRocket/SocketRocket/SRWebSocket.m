@@ -1016,7 +1016,7 @@ static inline BOOL closeCodeIsValid(int closeCode) {
         assert(frame_header.payload_length <= SIZE_T_MAX);
         //zc focus:addConsumer2
         
-        //现加现用
+        //zc read:这的Consumer是现加现用,加入_innerPumpScanner循环先给self->_currentFrameData赋相应的二进制数据,然后再调用下前的blcok
         
         [self _addConsumerWithDataLength:(size_t)frame_header.payload_length callback:^(SRWebSocket *self, NSData *data) {
             if (isControlFrame) {
@@ -1156,16 +1156,6 @@ static const uint8_t SRPayloadLenMask   = 0x7F;
 //zc read:准备读内容
 - (void)_readFrameNew;
 {
-//    [_currentFrameData setLength:0];
-//
-//    _currentFrameOpcode = 0;
-//    _currentFrameCount = 0;
-//    _readOpCount = 0;
-//    _currentStringScanPosition = 0;
-//    [self _readFrameContinue];
-//
-//    return;
-//
     //zc read:'异步'准备下一次调用
     dispatch_async(_workQueue, ^{
         [_currentFrameData setLength:0];
@@ -1228,11 +1218,11 @@ static const uint8_t SRPayloadLenMask   = 0x7F;
     }
 }
 
-- (void)_addConsumerWithScanner:(stream_scanner)consumer callback:(data_callback)callback;
+- (void)_addConsumerWithScanner:(stream_scanner)edge_consumer callback:(data_callback)callback;
 {
     [self assertOnWorkQueue];
     //zc focus:addConsumer1
-    [self _addConsumerWithScanner:consumer callback:callback dataLength:0];
+    [self _addConsumerWithScanner:edge_consumer callback:callback dataLength:0];
 }
 
 - (void)_addConsumerWithDataLength:(size_t)dataLength callback:(data_callback)callback readToCurrentFrame:(BOOL)readToCurrentFrame unmaskBytes:(BOOL)unmaskBytes;
@@ -1245,10 +1235,10 @@ static const uint8_t SRPayloadLenMask   = 0x7F;
     [self _pumpScanner];
 }
 
-- (void)_addConsumerWithScanner:(stream_scanner)consumer callback:(data_callback)callback dataLength:(size_t)dataLength;
+- (void)_addConsumerWithScanner:(stream_scanner)edge_consumer callback:(data_callback)callback dataLength:(size_t)dataLength;
 {    
     [self assertOnWorkQueue];
-    [_consumers addObject:[_consumerPool consumerWithScanner:consumer handler:callback bytesNeeded:dataLength readToCurrentFrame:NO unmaskBytes:NO]];
+    [_consumers addObject:[_consumerPool consumerWithScanner:edge_consumer handler:callback bytesNeeded:dataLength readToCurrentFrame:NO unmaskBytes:NO]];
     NSLog(@"zc read:加消费者");
     [self _pumpScanner];
 }
@@ -1299,7 +1289,7 @@ static const char CRLFCRLFBytes[] = {'\r', '\n', '\r', '\n'};
 - (void)_readUntilBytes:(const void *)bytes length:(size_t)length callback:(data_callback)dataHandler;
 {
     // TODO optimize so this can continue from where we last searched
-    stream_scanner consumer = ^size_t(NSData *data) {
+    stream_scanner edge_consumer = ^size_t(NSData *data) {
         __block size_t found_size = 0;
         __block size_t match_count = 0;
         
@@ -1318,9 +1308,9 @@ static const char CRLFCRLFBytes[] = {'\r', '\n', '\r', '\n'};
         }
         return found_size;
     };
-    //block consumer:检测是否读到边界
-    //block dataHandler:检测http头是否完全
-    [self _addConsumerWithScanner:consumer callback:dataHandler];
+    //block consumer:把边界以内的数据提取出来
+    //block dataHandler:读取边界以内的数据
+    [self _addConsumerWithScanner:edge_consumer callback:dataHandler];
 }
 
 
@@ -1337,13 +1327,13 @@ static const char CRLFCRLFBytes[] = {'\r', '\n', '\r', '\n'};
     }
     
     if (!_consumers.count) {
-        NSLog(@"zc read:_innerPumpScanner stop 1");
+        NSLog(@"zc read:_innerPumpScanner stop 1");//zc read:一般只是为了挡住自身循环
         return didWork;
     }
     
     size_t curSize = _readBuffer.length - _readBufferOffset;
     if (!curSize) {
-        NSLog(@"zc read:_innerPumpScanner stop 2");
+        NSLog(@"zc read:_innerPumpScanner stop 2");//zc read:为了挡住没有数据
         return didWork;
     }
     
@@ -1495,7 +1485,7 @@ static const size_t SRFrameHeaderOverhead = 32;
     }
     uint8_t *frame_buffer = (uint8_t *)[frame mutableBytes];
     
-    // set fin
+    // set fin and opcode
     frame_buffer[0] = SRFinMask | opcode;
     
     BOOL useMask = YES;
@@ -1522,8 +1512,8 @@ static const size_t SRFrameHeaderOverhead = 32;
     if (payloadLength < 126) {
         frame_buffer[1] |= payloadLength;
     } else if (payloadLength <= UINT16_MAX) {
-        frame_buffer[1] |= 126;
-        *((uint16_t *)(frame_buffer + frame_buffer_size)) = EndianU16_BtoN((uint16_t)payloadLength);
+        frame_buffer[1] |= 126;                                                                     //zc read:set payload lenth
+        *((uint16_t *)(frame_buffer + frame_buffer_size)) = EndianU16_BtoN((uint16_t)payloadLength);//zc read:set Extended payload lenth
         frame_buffer_size += sizeof(uint16_t);
     } else {
         frame_buffer[1] |= 127;
@@ -1538,12 +1528,12 @@ static const size_t SRFrameHeaderOverhead = 32;
         }
     } else {
         uint8_t *mask_key = frame_buffer + frame_buffer_size;
-        SecRandomCopyBytes(kSecRandomDefault, sizeof(uint32_t), (uint8_t *)mask_key);
+        SecRandomCopyBytes(kSecRandomDefault, sizeof(uint32_t), (uint8_t *)mask_key); //zc read:set mask_key
         frame_buffer_size += sizeof(uint32_t);
         
         // TODO: could probably optimize this with SIMD
         for (size_t i = 0; i < payloadLength; i++) {
-            frame_buffer[frame_buffer_size] = unmasked_payload[i] ^ mask_key[i % sizeof(uint32_t)];
+            frame_buffer[frame_buffer_size] = unmasked_payload[i] ^ mask_key[i % sizeof(uint32_t)];//zc read:set payload with mask_key
             frame_buffer_size += 1;
         }
     }
@@ -1619,8 +1609,8 @@ static const size_t SRFrameHeaderOverhead = 32;
                 if ((!_secure || !usingPinnedCerts) && self.readyState == SR_CONNECTING && aStream == _inputStream) {
                     [self didConnect];
                 }
-//                [self _pumpWriting];
-//                [self _pumpScanner];//zc read:没数据可读,调用_pumpScanner,中途就会return
+                [self _pumpWriting];
+                [self _pumpScanner];//zc read:没数据可读,调用_pumpScanner,中途就会return
                 break;
             }
                 

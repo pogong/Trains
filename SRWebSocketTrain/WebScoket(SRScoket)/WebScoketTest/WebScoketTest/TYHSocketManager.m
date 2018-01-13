@@ -59,7 +59,7 @@ static const uint16_t Kport = 6969;
     
     //设置代理线程queue
     NSOperationQueue *queue = [[NSOperationQueue alloc]init];
-    queue.maxConcurrentOperationCount = 1;
+    queue.maxConcurrentOperationCount = 1;//zc read:并发数为1==>串行队列
     
     [webSocket setDelegateOperationQueue:queue];
     
@@ -68,6 +68,8 @@ static const uint16_t Kport = 6969;
     
     
 }
+
+
 
 //初始化心跳
 - (void)initHeartBeat
