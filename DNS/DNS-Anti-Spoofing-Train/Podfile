@@ -1,0 +1,8 @@
+platform:ios,8.0
+target 'DNS-Anti-Spoofing-Train' do
+ #use_frameworks!
+
+pod 'HappyDNS'
+
+end
+

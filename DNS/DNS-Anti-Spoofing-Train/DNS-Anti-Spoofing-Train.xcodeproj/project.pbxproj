@@ -1,0 +1,410 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4D489EF0200DDA09001A3264 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D489EEF200DDA09001A3264 /* AppDelegate.m */; };
+		4D489EF3200DDA09001A3264 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D489EF2200DDA09001A3264 /* ViewController.m */; };
+		4D489EF6200DDA09001A3264 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D489EF4200DDA09001A3264 /* Main.storyboard */; };
+		4D489EF8200DDA09001A3264 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D489EF7200DDA09001A3264 /* Assets.xcassets */; };
+		4D489EFB200DDA09001A3264 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D489EF9200DDA09001A3264 /* LaunchScreen.storyboard */; };
+		4D489EFE200DDA09001A3264 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D489EFD200DDA09001A3264 /* main.m */; };
+		4D489F06200DDAA0001A3264 /* PGURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D489F05200DDAA0001A3264 /* PGURLProtocol.m */; };
+		A4C8947C22C2AB09308AD655 /* libPods-DNS-Anti-Spoofing-Train.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 525E673F88701E4DB4AAD17F /* libPods-DNS-Anti-Spoofing-Train.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		063EB76C92CDF9DE8170CE6D /* Pods-DNS-Anti-Spoofing-Train.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DNS-Anti-Spoofing-Train.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DNS-Anti-Spoofing-Train/Pods-DNS-Anti-Spoofing-Train.debug.xcconfig"; sourceTree = "<group>"; };
+		4D489EEB200DDA09001A3264 /* DNS-Anti-Spoofing-Train.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DNS-Anti-Spoofing-Train.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D489EEE200DDA09001A3264 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4D489EEF200DDA09001A3264 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4D489EF1200DDA09001A3264 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		4D489EF2200DDA09001A3264 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		4D489EF5200DDA09001A3264 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4D489EF7200DDA09001A3264 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4D489EFA200DDA09001A3264 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4D489EFC200DDA09001A3264 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D489EFD200DDA09001A3264 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4D489F04200DDAA0001A3264 /* PGURLProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGURLProtocol.h; sourceTree = "<group>"; };
+		4D489F05200DDAA0001A3264 /* PGURLProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGURLProtocol.m; sourceTree = "<group>"; };
+		525E673F88701E4DB4AAD17F /* libPods-DNS-Anti-Spoofing-Train.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DNS-Anti-Spoofing-Train.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5A9F2558837E93F5F78441C /* Pods-DNS-Anti-Spoofing-Train.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DNS-Anti-Spoofing-Train.release.xcconfig"; path = "Pods/Target Support Files/Pods-DNS-Anti-Spoofing-Train/Pods-DNS-Anti-Spoofing-Train.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4D489EE8200DDA09001A3264 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A4C8947C22C2AB09308AD655 /* libPods-DNS-Anti-Spoofing-Train.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4D489EE2200DDA09001A3264 = {
+			isa = PBXGroup;
+			children = (
+				4D489EED200DDA09001A3264 /* DNS-Anti-Spoofing-Train */,
+				4D489EEC200DDA09001A3264 /* Products */,
+				D0F810256D408FD426D6B381 /* Pods */,
+				93DA572482033C45EA71C8AB /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4D489EEC200DDA09001A3264 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4D489EEB200DDA09001A3264 /* DNS-Anti-Spoofing-Train.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4D489EED200DDA09001A3264 /* DNS-Anti-Spoofing-Train */ = {
+			isa = PBXGroup;
+			children = (
+				4D489F04200DDAA0001A3264 /* PGURLProtocol.h */,
+				4D489F05200DDAA0001A3264 /* PGURLProtocol.m */,
+				4D489EEE200DDA09001A3264 /* AppDelegate.h */,
+				4D489EEF200DDA09001A3264 /* AppDelegate.m */,
+				4D489EF1200DDA09001A3264 /* ViewController.h */,
+				4D489EF2200DDA09001A3264 /* ViewController.m */,
+				4D489EF4200DDA09001A3264 /* Main.storyboard */,
+				4D489EF7200DDA09001A3264 /* Assets.xcassets */,
+				4D489EF9200DDA09001A3264 /* LaunchScreen.storyboard */,
+				4D489EFC200DDA09001A3264 /* Info.plist */,
+				4D489EFD200DDA09001A3264 /* main.m */,
+			);
+			path = "DNS-Anti-Spoofing-Train";
+			sourceTree = "<group>";
+		};
+		93DA572482033C45EA71C8AB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				525E673F88701E4DB4AAD17F /* libPods-DNS-Anti-Spoofing-Train.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D0F810256D408FD426D6B381 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				063EB76C92CDF9DE8170CE6D /* Pods-DNS-Anti-Spoofing-Train.debug.xcconfig */,
+				F5A9F2558837E93F5F78441C /* Pods-DNS-Anti-Spoofing-Train.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4D489EEA200DDA09001A3264 /* DNS-Anti-Spoofing-Train */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D489F01200DDA09001A3264 /* Build configuration list for PBXNativeTarget "DNS-Anti-Spoofing-Train" */;
+			buildPhases = (
+				2D1E76DE8CFD3189F285184A /* [CP] Check Pods Manifest.lock */,
+				4D489EE7200DDA09001A3264 /* Sources */,
+				4D489EE8200DDA09001A3264 /* Frameworks */,
+				4D489EE9200DDA09001A3264 /* Resources */,
+				86C015C3F36F1EC0CBEE7FD6 /* [CP] Embed Pods Frameworks */,
+				3E7CD3764183552A3D236188 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "DNS-Anti-Spoofing-Train";
+			productName = "DNS-Anti-Spoofing-Train";
+			productReference = 4D489EEB200DDA09001A3264 /* DNS-Anti-Spoofing-Train.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4D489EE3200DDA09001A3264 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = Shendou;
+				TargetAttributes = {
+					4D489EEA200DDA09001A3264 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 4D489EE6200DDA09001A3264 /* Build configuration list for PBXProject "DNS-Anti-Spoofing-Train" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4D489EE2200DDA09001A3264;
+			productRefGroup = 4D489EEC200DDA09001A3264 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4D489EEA200DDA09001A3264 /* DNS-Anti-Spoofing-Train */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4D489EE9200DDA09001A3264 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D489EFB200DDA09001A3264 /* LaunchScreen.storyboard in Resources */,
+				4D489EF8200DDA09001A3264 /* Assets.xcassets in Resources */,
+				4D489EF6200DDA09001A3264 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2D1E76DE8CFD3189F285184A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3E7CD3764183552A3D236188 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DNS-Anti-Spoofing-Train/Pods-DNS-Anti-Spoofing-Train-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		86C015C3F36F1EC0CBEE7FD6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DNS-Anti-Spoofing-Train/Pods-DNS-Anti-Spoofing-Train-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4D489EE7200DDA09001A3264 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D489EF3200DDA09001A3264 /* ViewController.m in Sources */,
+				4D489EFE200DDA09001A3264 /* main.m in Sources */,
+				4D489F06200DDAA0001A3264 /* PGURLProtocol.m in Sources */,
+				4D489EF0200DDA09001A3264 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4D489EF4200DDA09001A3264 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D489EF5200DDA09001A3264 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		4D489EF9200DDA09001A3264 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D489EFA200DDA09001A3264 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4D489EFF200DDA09001A3264 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4D489F00200DDA09001A3264 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4D489F02200DDA09001A3264 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 063EB76C92CDF9DE8170CE6D /* Pods-DNS-Anti-Spoofing-Train.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "DNS-Anti-Spoofing-Train/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pg.DNS-Anti-Spoofing-Train";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4D489F03200DDA09001A3264 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5A9F2558837E93F5F78441C /* Pods-DNS-Anti-Spoofing-Train.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "DNS-Anti-Spoofing-Train/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pg.DNS-Anti-Spoofing-Train";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4D489EE6200DDA09001A3264 /* Build configuration list for PBXProject "DNS-Anti-Spoofing-Train" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D489EFF200DDA09001A3264 /* Debug */,
+				4D489F00200DDA09001A3264 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D489F01200DDA09001A3264 /* Build configuration list for PBXNativeTarget "DNS-Anti-Spoofing-Train" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D489F02200DDA09001A3264 /* Debug */,
+				4D489F03200DDA09001A3264 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4D489EE3200DDA09001A3264 /* Project object */;
+}
