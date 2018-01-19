@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "AFNetworkingController.h"
+#import "NewViewController.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -68,6 +69,10 @@
 	[_tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 	if (indexPath.row == 0) {
+        NewViewController * xx = [[NewViewController alloc]init];
+        [self.navigationController pushViewController:xx animated:YES];
+        return;
+        
         AFNetworkingController * vc = [[AFNetworkingController alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
 	}else if (indexPath.row == 1){
