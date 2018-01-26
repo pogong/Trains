@@ -47,7 +47,7 @@ export default class App extends Component<{}> {
 
         return (
             <View style={styles.pogong_style}>
-                <NetworkLoadDataListViewTrain/>
+                <NavigatorTrain/>
             </View>
             )
 
