@@ -1,8 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+
 
 import React, { Component } from 'react';
 
@@ -13,16 +9,26 @@ import {
   View
 } from 'react-native';
 
-// import PogongComponent from  './PogongComponent';
+import setup from './setup';
 
-import LifecycleComponent from  './LifecycleComponent';
+import TextComponent from  './TextComponent';
 
-import EIComponent,{name,age,score,sum} from "./EIComponent";//类,变量,方法的导出全要写明
+import TouchableTest from  './TouchableTest';
 
-import RefTestComponent from  './RefTestComponent';
-import Student from  './Student';
-import Xiaoming from  './Xiaoming';
-import TouchableTest from "./TouchableTest";
+import ImageComponent from  './ImageComponent';
+import ScrollViewComponent from "./ScrollViewComponent";
+import ScrollViewMovieList from "./ScrollViewMovieList";
+import ListViewTrain1 from "./ListViewTrain1";
+import LifecycleComponent from "./LifecycleComponent";
+import FlexTrain from "./FlexTrain";
+import ListViewTrain2 from "./ListViewTrain2";
+import NavigatorTrain from "./NavigatorTrain";
+import TabBarTrain from "./TabBarTrain";
+import NetworkTrain from "./NetworkTrain";
+import NetworkLoadDataListViewTrain from "./NetworkLoadDataListViewTrain";
+
+//zc remain:导出
+import {name,age,sum} from './EIComponent'
 
 const instructions = Platform.select({
   ios: 'zc xxhh Press Cmd+R to reload,\n' +
@@ -35,38 +41,16 @@ export default class App extends Component<{}> {
 
     constructor(props) {
         super(props)
-        this.state = ({
-            remove: false,
-            result:'',
-            size:0
-        })
-        this.student = new Student('xh','女',16)
-        this.ming=new Xiaoming()
     }
 
     render() {
 
         return (
-                <View style=styles.pogong_style}>
-                    <TouchableTest/>
-                </View>
+            <View style={styles.pogong_style}>
+                <NetworkLoadDataListViewTrain/>
+            </View>
             )
 
-
-
-
-        // return <View style={styles.pogong_style}>
-        //
-        //     <Text style={{fontSize: 20, backgroundColor: 'red'}}
-        //           onPress={() => {
-        //               var size = this.refs.reftest.getSize();//zc细心点好不好
-        //               this.setState({
-        //                   size: size
-        //               })
-        //           }}
-        //     >{this.ming.getDescription()}</Text>
-        //
-        // </View>
     }
 
 };
@@ -74,8 +58,8 @@ export default class App extends Component<{}> {
 const styles = StyleSheet.create({
     pogong_style: {
         flex: 1,
-        backgroundColor: '#ffffff',
-        marginTop:20
+        backgroundColor: 'white',
+        marginTop:0
     },
   container: {
     flex: 1,

@@ -51,12 +51,16 @@ export default class LifecycleComponent extends Component{
         return <View>
 
         <Text
-            style={{fontSize:20,backgroundColor:'blue'}}
+            style={{fontSize:20,backgroundColor:"blue"}}
             onPress={()=>{
+
             this.setState({
                 count:this.state.count+1
             })
-        }}>有本事来打我呀.</Text>
+
+            }
+            }
+        >有本事来打我呀.</Text>
 
         <Text style={{fontSize:20,backgroundColor:'red'}}>--被打了{this.state.count}</Text>
 

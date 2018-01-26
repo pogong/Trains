@@ -29,9 +29,9 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     self.title = @"NSURLSessionTrain";
-    NSStreamSOCKSProxyConfigurationKey
-    NSStreamSOCKSProxyConfigurationKey
-    NSStreamSOCKSProxyNameKey
+//    NSStreamSOCKSProxyConfigurationKey
+//    NSStreamSOCKSProxyConfigurationKey
+//    NSStreamSOCKSProxyNameKey
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeAll;
