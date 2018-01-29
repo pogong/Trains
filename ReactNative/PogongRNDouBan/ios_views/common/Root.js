@@ -12,12 +12,6 @@ import Navigation from "../common/Navigation";
 
 export default class Root extends  Component{
 
-    // render(){
-    //     return (
-    //         <BookList/>
-    //     );
-    // }
-
     constructor(props){
         super(props)
         this.state={
@@ -34,7 +28,7 @@ export default class Root extends  Component{
     render(){
         return (
             <TabBarIOS
-                tintColor='green' // 文字选中颜色
+                tintColor='cyan' // 文字选中颜色
                 unselectedTintColor = 'black' // 文字默认颜色
             >
 
@@ -63,7 +57,8 @@ export default class Root extends  Component{
                     selected = {this.state.tab === "电影"}
                 >
 
-                    <View style={{backgroundColor:"cyan",flex:1}}></View>
+                    <View style={{flex:1,backgroundColor:"cyan"}}>
+                    </View>
 
                 </TabBarIOS.Item>
 

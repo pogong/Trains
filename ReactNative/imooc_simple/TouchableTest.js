@@ -17,64 +17,81 @@ export default class TouchableTest extends  Component{
         super(props)
         this.state={
             count:0,
-            text:'',
+            text:'zc',
             waiting:false,
             startTime:0,
             endTime:0
         }
     }
 
+    pressAct1(){
+        alert("xxx")
+    }
+
+    pressAct2(passText){
+        alert(passText)
+    }
+
+    pressAct3() {
+        alert(this.state.text)
+        this.setState({text: "zc2"})
+    }
+
     render(){
         return <View style={styles.container}>
 
-            <View style={styles.flex}>
-
-                <View style={styles.input}>
-
-
-                </View>
-
-            </View>
-
+            <TouchableOpacity style={styles.btn}
+                              onPress={() => this.pressAct1()}
+            >
+                <Text style={styles.search}>搜索1</Text>
+            </TouchableOpacity>
 
             <TouchableOpacity style={styles.btn}
-
-                              onPress={()=> {
-                                  alert('zc touch')
-                              }}
-
+                              onPress={() => this.pressAct2("pass in")}
             >
-                <Text style={styles.search}>搜索</Text>
+                <Text style={styles.search}>搜索2</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.btn}
+                              onPress={() => this.pressAct3()}
+            >
+                <Text style={styles.search}>搜索3</Text>
             </TouchableOpacity>
 
         </View>
     }
 
+    // render(){
+    //     return <View style={styles.container}>
+    //
+    //         <TouchableOpacity style={styles.btn}
+    //                           onPress={this.pressAct1}
+    //         >
+    //             <Text style={styles.search}>搜索1</Text>
+    //         </TouchableOpacity>
+    //
+    //         <TouchableOpacity style={styles.btn}
+    //                           // onPress={this.pressAct2("zc2")}//只参数:错误,会直接调用
+    //         >
+    //             <Text style={styles.search}>搜索2</Text>
+    //         </TouchableOpacity>
+    //
+    //         <TouchableOpacity style={styles.btn}
+    //                           onPress={this.pressAct2.bind(this,"xx")}//只参数:对
+    //         >
+    //             <Text style={styles.search}>搜索3</Text>
+    //         </TouchableOpacity>
+    //
+    //         <TouchableOpacity style={styles.btn}
+    //                           onPress={this.pressAct3.bind(this)}
+    //         >
+    //             <Text style={styles.search}>搜索4</Text>
+    //         </TouchableOpacity>
+    //
+    //     </View>
+    // }
+
 }
-
-/*
-    render(){
-        return <View>
-
-            <TouchableWithoutFeedback
-                onPressIn={()=> {
-                    this.setState({text:'触摸开始',startTime:new Date().getTime()})
-                }}
-                onPressOut={()=>{
-                    this.setState({text:'触摸结束,持续时间:'+(new Date().getTime()-this.state.startTime)+'毫秒'})
-                }}
-            >
-                <View style={styles.button}>
-                    <Text style={styles.buttonText}>
-                        点我
-                    </Text>
-                </View>
-            </TouchableWithoutFeedback>
-            <Text style={styles.text}>{this.state.text}</Text>
-
-        </View>
-    }
-*/
 
 const styles = StyleSheet.create({
 
@@ -110,7 +127,6 @@ const styles = StyleSheet.create({
         color:"#FFF",
         fontSize:15,
         fontWeight:"bold",//粗体,斜体之类
-        backgroundColor:"yellow",
     }
 
 });

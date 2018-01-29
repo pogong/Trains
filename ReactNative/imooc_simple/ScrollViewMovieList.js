@@ -13,9 +13,6 @@ import {
     RefreshControl
 } from 'react-native'
 
-
-
-
 export default class ScrollViewMovieList extends  Component {
 
 

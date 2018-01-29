@@ -9,26 +9,11 @@ import {
   View
 } from 'react-native';
 
-import setup from './setup';
-
-import TextComponent from  './TextComponent';
-
-import TouchableTest from  './TouchableTest';
-
-import ImageComponent from  './ImageComponent';
-import ScrollViewComponent from "./ScrollViewComponent";
-import ScrollViewMovieList from "./ScrollViewMovieList";
-import ListViewTrain1 from "./ListViewTrain1";
-import LifecycleComponent from "./LifecycleComponent";
-import FlexTrain from "./FlexTrain";
-import ListViewTrain2 from "./ListViewTrain2";
-import NavigatorTrain from "./NavigatorTrain";
-import TabBarTrain from "./TabBarTrain";
-import NetworkTrain from "./NetworkTrain";
-import NetworkLoadDataListViewTrain from "./NetworkLoadDataListViewTrain";
-
 //zc remain:导出
 import {name,age,sum} from './EIComponent'
+import ListViewTrain2 from "./ListViewTrain2";
+import FlatListTrain from "./FlatListTrain";
+import ScrollViewMovieList from "./ScrollViewMovieList";
 
 const instructions = Platform.select({
   ios: 'zc xxhh Press Cmd+R to reload,\n' +
@@ -47,7 +32,7 @@ export default class App extends Component<{}> {
 
         return (
             <View style={styles.pogong_style}>
-                <ListViewTrain2/>
+                <ScrollViewMovieList/>
             </View>
             )
 
@@ -58,7 +43,7 @@ export default class App extends Component<{}> {
 const styles = StyleSheet.create({
     pogong_style: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: 'red',
         marginTop:0
     },
   container: {

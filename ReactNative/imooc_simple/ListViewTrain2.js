@@ -12,6 +12,27 @@ import {
     Image
 } from 'react-native'
 
+class Cell extends  Component  {
+
+    render(){
+        return (
+            <TouchableOpacity style={styles.row}
+                              {...this.props}
+            >
+
+                <Image source={{uri:this.props.movie.image_url}} style = {styles.image}>
+                </Image>
+
+                <View style={styles.rightContainer}>
+                    <Text style={styles.name}>{this.props.movie.name}</Text>
+                    <Text style={styles.time}>{this.props.movie.time}</Text>
+                </View>
+
+            </TouchableOpacity>
+        )
+    }
+}
+
 export default class ListViewTrain2 extends  Component  {
 
     constructor(props){
@@ -30,21 +51,14 @@ export default class ListViewTrain2 extends  Component  {
         }
     }
 
+    pushAct(name){
+        alert(name + "+" + this.state.xx)
+    }
+
     //渲染行组件,参数为行显示的数据
     zc_renderRow(movie, sectionID, rowID, highlightRow){
-
         return (
-            <View style={styles.row}>
-
-                <Image source={{uri:movie.image_url}} style = {styles.image}>
-                </Image>
-
-                <View style={styles.rightContainer}>
-                    <Text style={styles.name}>{movie.name}</Text>
-                    <Text style={styles.time}>{movie.time}</Text>
-                </View>
-
-            </View>
+            <Cell movie={movie} onPress={this.pushAct.bind(this,movie.name)} />
         )
     }
 
@@ -68,11 +82,12 @@ export default class ListViewTrain2 extends  Component  {
     }
 
     render(){
+
         return (
 
             <ListView style={styles.listView}
                       dataSource={this.state.dataSource}
-                      renderRow={this.zc_renderRow}//参数笔直传递,不用写出来
+                      renderRow={this.zc_renderRow.bind(this)}//zc remain:非常重要==>cell的点击这里的bind才是重点
                       renderSeparator={this.zc_renderSeparator}
                       renderHeader={this.zc_renderHeader}
             ></ListView>
@@ -81,7 +96,6 @@ export default class ListViewTrain2 extends  Component  {
     }
 
 }
-
 
 const styles = StyleSheet.create({
 

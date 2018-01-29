@@ -23,11 +23,6 @@ export default class BookItem extends  Component {
 
             <TouchableOpacity style={styles.item} {...this.props} >
 
-                <Image
-                    style={styles.netImage}
-                    source={require('./../common/home@.png')}
-                ></Image>
-
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={{url:book.image}}></Image>
                 </View>
