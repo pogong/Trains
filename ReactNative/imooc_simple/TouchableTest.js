@@ -32,7 +32,7 @@ export default class TouchableTest extends  Component{
         alert(passText)
     }
 
-    pressAct3() {
+    pressAct3(text) {
         alert(this.state.text)
         this.setState({text: "zc2"})
     }
@@ -53,7 +53,7 @@ export default class TouchableTest extends  Component{
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.btn}
-                              onPress={() => this.pressAct3()}
+                              onPress={() => this.pressAct3}
             >
                 <Text style={styles.search}>搜索3</Text>
             </TouchableOpacity>
@@ -71,13 +71,13 @@ export default class TouchableTest extends  Component{
     //         </TouchableOpacity>
     //
     //         <TouchableOpacity style={styles.btn}
-    //                           // onPress={this.pressAct2("zc2")}//只参数:错误,会直接调用
+    //                           // onPress={this.pressAct2("zc2")}//加参数:错误,会直接调用
     //         >
     //             <Text style={styles.search}>搜索2</Text>
     //         </TouchableOpacity>
     //
     //         <TouchableOpacity style={styles.btn}
-    //                           onPress={this.pressAct2.bind(this,"xx")}//只参数:对
+    //                           onPress={this.pressAct2.bind(this,"xx")}//加参数:对
     //         >
     //             <Text style={styles.search}>搜索3</Text>
     //         </TouchableOpacity>

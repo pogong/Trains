@@ -57,6 +57,7 @@ export default class ListViewTrain2 extends  Component  {
 
     //渲染行组件,参数为行显示的数据
     zc_renderRow(movie, sectionID, rowID, highlightRow){
+        console.log(this.state.xx)
         return (
             <Cell movie={movie} onPress={this.pushAct.bind(this,movie.name)} />
         )
@@ -87,7 +88,8 @@ export default class ListViewTrain2 extends  Component  {
 
             <ListView style={styles.listView}
                       dataSource={this.state.dataSource}
-                      renderRow={this.zc_renderRow.bind(this)}//zc remain:非常重要==>cell的点击这里的bind才是重点
+                      renderRow={this.zc_renderRow.bind(this)}//zc remain:非常重要==>cell的点击用到this,所以这里就需要bind
+                      //renderRow={() => this.zc_renderRow}//zc remain:这种写法虽然不用刻意做bind,但没法传递renderRow传入的参数
                       renderSeparator={this.zc_renderSeparator}
                       renderHeader={this.zc_renderHeader}
             ></ListView>

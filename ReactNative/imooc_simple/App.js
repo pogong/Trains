@@ -14,6 +14,7 @@ import {name,age,sum} from './EIComponent'
 import ListViewTrain2 from "./ListViewTrain2";
 import FlatListTrain from "./FlatListTrain";
 import ScrollViewMovieList from "./ScrollViewMovieList";
+import TouchableTest from "./TouchableTest";
 
 const instructions = Platform.select({
   ios: 'zc xxhh Press Cmd+R to reload,\n' +
@@ -32,7 +33,7 @@ export default class App extends Component<{}> {
 
         return (
             <View style={styles.pogong_style}>
-                <ScrollViewMovieList/>
+                <ListViewTrain2/>
             </View>
             )
 
