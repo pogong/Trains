@@ -79,8 +79,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "8062"
             endingLineNumber = "8062"
-            landmarkName = "CFReadStreamCallback"
-            landmarkType = "9">
+            landmarkName = "+cfstreamThread"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
