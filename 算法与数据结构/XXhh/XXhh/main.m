@@ -28,7 +28,7 @@ typedef struct _QueueNode {
 
 typedef struct _Queue {
     unsigned int size;
-    QueueNode *first;
+    QueueNode *head;
 }Queue;
 
 /*
@@ -43,7 +43,7 @@ for (int i = 0; i<256; i++) {
     sub->probability = i;
 }
  
-坑2:链表没有头节点(无真实数据的那个)很麻烦
+坑2:链表没有头节点(无真实数据的那个)很麻烦,加了头节点超级方便
 */
 
 QueueNode * zc_createQueueNode(int probability,char symbol){
@@ -61,23 +61,21 @@ void zc_add_queue_node(int probability,char symbol,Queue * queue){
     
     queue->size++;
     
-    if (queue->first == NULL) {//queue没有first
+    if (queue->head->next == NULL) {//queue没有first
         
         QueueNode * new = zc_createQueueNode(probability,symbol);
-        queue->first = new;
+        queue->head->next = new;
         
     }else{
 
-        QueueNode * need_free = zc_createQueueNode(0,'c');
-        QueueNode * cur = need_free;
-        cur->next = queue->first;//我把地址给你,你换指向关我什么事
+        QueueNode * cur = queue->head;
         
         while (1) {
             if (cur->next->probability < probability) {
                 
                 cur = cur->next;
                 if (cur->next) {
-                    //继续向后
+                    //继续向后看
                 }else{
                     QueueNode * new = zc_createQueueNode(probability,symbol);
                     cur->next = new;
@@ -88,26 +86,20 @@ void zc_add_queue_node(int probability,char symbol,Queue * queue){
             }else{
                 QueueNode * new = zc_createQueueNode(probability,symbol);
                 
-                if (queue->first == cur->next) {
-                    new->next = queue->first;
-                    queue->first = new;
-                }else{
-                    new->next = cur->next;
-                    cur->next = new;
-                }
+                new->next = cur->next;
+                cur->next = new;
                 
                 break;
             }
         }
         
-        free(need_free);
     }
 }
 
 Queue * zc_create_queue(Symbolprobability * some){
     
     Queue * queue = (Queue *)malloc(sizeof(Queue));
-    queue->first = NULL;
+    queue->head = zc_createQueueNode(0,' ');;
     queue->size = 0;
     
     for (int i = 0; i<256; i++) {
@@ -117,7 +109,7 @@ Queue * zc_create_queue(Symbolprobability * some){
         }
     }
     
-    QueueNode * one = queue->first;
+    QueueNode * one = queue->head->next;
     while (one) {
         printf("zc see %d-%c\n",one->probability,one->treeNode->symbol);
         one = one->next;
