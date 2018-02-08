@@ -101,13 +101,6 @@ htTree * buildTree(char *inputString)
             addPQueue(&huffmanQueue,aux,probability[i]);
         }
     
-    //zc 遍历 链表
-    pQueueNode *one = huffmanQueue->first;
-    while (one) {
-        printf("zc see %d-%c\n",one->priority,one->val->symbol);
-        one = one->next;
-    }
-    
     //We free the array because we don't need it anymore
     free(probability);
     

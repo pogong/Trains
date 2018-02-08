@@ -16,8 +16,8 @@ typedef struct _Symbolprobability {
 
 typedef struct _HffmanTreeNode {
     char symbol;
-    struct HffmanTreeNode * left;
-    struct HffmanTreeNode * right;
+    struct _HffmanTreeNode * left;
+    struct _HffmanTreeNode * right;
 }HffmanTreeNode;
 
 typedef struct _QueueNode {
@@ -30,6 +30,10 @@ typedef struct _Queue {
     unsigned int size;
     QueueNode *head;
 }Queue;
+
+typedef struct _HffmanTree {
+    HffmanTreeNode *root;
+}HffmanTree;
 
 /*
 坑1:结构体赋值==>何时用.,何时用->
@@ -46,50 +50,42 @@ for (int i = 0; i<256; i++) {
 坑2:链表没有头节点(无真实数据的那个)很麻烦,加了头节点超级方便
 */
 
-QueueNode * zc_createQueueNode(int probability,char symbol){
+QueueNode * zc_createQueueNode(int probability,HffmanTreeNode * treeNode){
     QueueNode * new = (QueueNode *)malloc(sizeof(QueueNode));
     new->next = NULL;
     new->probability = probability;
-    new->treeNode = (HffmanTreeNode *)malloc(sizeof(HffmanTreeNode));
-    new->treeNode->symbol = symbol;
-    new->treeNode->left = NULL;
-    new->treeNode->right = NULL;
+    new->treeNode = treeNode;
     return new;
 }
 
-void zc_add_queue_node(int probability,char symbol,Queue * queue){
+QueueNode * zc_add_queue_node(QueueNode * new,Queue * queue){
     
     queue->size++;
     
     if (queue->head->next == NULL) {//queue没有first
         
-        QueueNode * new = zc_createQueueNode(probability,symbol);
         queue->head->next = new;
+        return new;
         
     }else{
 
         QueueNode * cur = queue->head;
         
         while (1) {
-            if (cur->next->probability < probability) {
+            if (cur->next->probability < new->probability) {
                 
                 cur = cur->next;
                 if (cur->next) {
                     //继续向后看
                 }else{
-                    QueueNode * new = zc_createQueueNode(probability,symbol);
                     cur->next = new;
-                    
-                    break;
+                    return new;
                 }
                 
             }else{
-                QueueNode * new = zc_createQueueNode(probability,symbol);
-                
                 new->next = cur->next;
                 cur->next = new;
-                
-                break;
+                return new;
             }
         }
         
@@ -99,13 +95,20 @@ void zc_add_queue_node(int probability,char symbol,Queue * queue){
 Queue * zc_create_queue(Symbolprobability * some){
     
     Queue * queue = (Queue *)malloc(sizeof(Queue));
-    queue->head = zc_createQueueNode(0,' ');;
+    queue->head = zc_createQueueNode(0,NULL);
     queue->size = 0;
     
     for (int i = 0; i<256; i++) {
         Symbolprobability * sub = &some[i];
         if (sub->probability > 0) {
-            zc_add_queue_node(sub->probability,sub->symbol,queue);
+            
+            HffmanTreeNode * treeNode = (HffmanTreeNode *)malloc(sizeof(HffmanTreeNode));
+            treeNode->symbol = sub->symbol;
+            treeNode->left = NULL;
+            treeNode->right = NULL;
+            
+            QueueNode * queueNode = zc_createQueueNode(sub->probability, treeNode);
+            zc_add_queue_node(queueNode,queue);
         }
     }
     
@@ -143,18 +146,61 @@ Symbolprobability * zc_create_probability(char * string){
     return some;
 }
 
+HffmanTree * zc_create_tree(Queue * queue){
+
+    HffmanTreeNode * lastTreeNode = NULL;
+    
+    while (queue->size > 1) {
+        QueueNode * fisrt = queue->head->next;
+        QueueNode * second = fisrt->next;
+        
+        queue->head->next = queue->head->next->next->next;
+        queue->size -= 2;
+        
+        HffmanTreeNode * newTreeNode = (HffmanTreeNode *)malloc(sizeof(HffmanTreeNode));
+        newTreeNode->symbol = '^';
+        newTreeNode->left = fisrt->treeNode;
+        newTreeNode->right = second->treeNode;
+        
+        QueueNode * queueNode = zc_createQueueNode(fisrt->probability+second->probability,newTreeNode);
+        zc_add_queue_node(queueNode,queue);
+        
+        lastTreeNode = newTreeNode;
+    }
+    
+    HffmanTree * tree = (HffmanTree *)malloc(sizeof(HffmanTree));
+    tree->root = lastTreeNode;
+    
+    return tree;
+}
+
+void visit(char c,int level){
+    printf("%c位于第%d层\n",c,level);
+}
+
+void preorderTraversal(HffmanTreeNode * treeNode,int level){
+    if (treeNode) {
+        visit(treeNode->symbol,level);
+        preorderTraversal(treeNode->left, level+1);
+        preorderTraversal(treeNode->right, level+1);
+    }
+}
+
 int main(void)
 {
-    Symbolprobability * list = zc_create_probability("aaaaa boop boop ccc!");
+    Symbolprobability * list = zc_create_probability("aaaaa+boop+boop+cccc!");
+
     Queue * queue = zc_create_queue(list);
-    
-    
-    
-    
+
+    HffmanTree * tree = zc_create_tree(queue);
+
+    preorderTraversal(tree->root,1);
+
     return 1;
     
     //We build the tree depending on the string
     htTree *codeTree = buildTree("aaaaa boop boop ccc!");
+    
     //We build the table depending on the Huffman tree
     hlTable *codeTable = buildTable(codeTree);
     
