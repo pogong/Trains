@@ -35,6 +35,17 @@ typedef struct _HffmanTree {
     HffmanTreeNode *root;
 }HffmanTree;
 
+typedef struct _HffmanTableNode {
+    char symbol;
+    char *code;
+    struct _HffmanTableNode *next;
+}HffmanTableNode;
+
+typedef struct _HffmanTable {
+    HffmanTableNode * first;
+    HffmanTableNode * last;
+}HffmanTable;
+
 /*
 坑1:结构体赋值==>何时用.,何时用->
 Symbolprobability xx = {'c',10};
@@ -48,6 +59,8 @@ for (int i = 0; i<256; i++) {
 }
  
 坑2:链表没有头节点(无真实数据的那个)很麻烦,加了头节点超级方便
+ 
+坑3:链表只做后续插入,不做中间传入,用first+last会比较方便(不同与坑2)
 */
 
 QueueNode * zc_createQueueNode(int probability,HffmanTreeNode * treeNode){
@@ -178,28 +191,125 @@ void visit(char c,int level){
     printf("%c位于第%d层\n",c,level);
 }
 
-void preorderTraversal(HffmanTreeNode * treeNode,int level){
+void zc_preorderTraversal(HffmanTreeNode * treeNode,int level){
     if (treeNode) {
         visit(treeNode->symbol,level);
-        preorderTraversal(treeNode->left, level+1);
-        preorderTraversal(treeNode->right, level+1);
+        zc_preorderTraversal(treeNode->left, level+1);
+        zc_preorderTraversal(treeNode->right, level+1);
     }
+}
+
+void zc_setTableNode(HffmanTreeNode * treeNode,char * code,int k,HffmanTable ** ptable){
+    HffmanTable * table = (* ptable);
+    
+    if (treeNode == NULL) {
+        return;
+    }
+    
+    if (treeNode->left == NULL && treeNode->right == NULL) {
+        code[k] = '\0';
+        HffmanTableNode * tableNode = (HffmanTableNode *)malloc(sizeof(HffmanTableNode));
+        tableNode->code = (char *)malloc(sizeof(char)*(strlen(code)+1));
+        strcpy(tableNode->code,code);
+        tableNode->symbol = treeNode->symbol;
+        
+        if (table->first == NULL) {
+            table->first = tableNode;
+            table->last = tableNode;
+        }else{
+            table->last->next = tableNode;
+            table->last = tableNode;
+        }
+        
+        printf("get %c\n",tableNode->symbol);
+        
+    }
+    
+    if(treeNode->left!=NULL)
+    {
+        code[k]='0';
+        zc_setTableNode(treeNode->left,code,k+1,ptable);
+    }
+    
+    if(treeNode->right!=NULL)
+    {
+        code[k]='1';
+        zc_setTableNode(treeNode->right,code,k+1,ptable);
+    }
+}
+
+HffmanTable * zc_createTable(HffmanTree * tree)
+{
+    HffmanTable *table = (HffmanTable *)malloc(sizeof(HffmanTable));
+    table->first = NULL;
+    table->last = NULL;
+    
+    char code[256];
+    int k = 0;
+    
+    //链表
+    zc_setTableNode(tree->root, code, k,&table);
+    
+    return table;
+}
+
+void zc_encode(HffmanTable *table, char *stringToEncode)
+{
+    HffmanTableNode *traversal;
+    
+    for(int i=0; stringToEncode[i]!='\0'; i++)
+    {
+        traversal = table->first;
+        while(traversal->symbol != stringToEncode[i])
+            traversal = traversal->next;
+        printf("%s",traversal->code);
+    }
+    
+    printf("\n");
+}
+
+void zc_decode(HffmanTree * tree,char * string){
+    HffmanTreeNode * cur = tree->root;
+    for (int i = 0; string[i] != '\0'; i++) {
+        if (cur->left == NULL && cur->right == NULL) {
+            printf("%c",cur->symbol);
+            cur = tree->root;
+        }
+        
+        if(string[i] == '0')
+            cur = cur->left;
+        
+        if(string[i] == '1')
+            cur = cur->right;
+    }
+    
+    if (cur->left == NULL && cur->right == NULL) {
+        printf("%c",cur->symbol);
+    }
+    
+    printf("\n");
 }
 
 int main(void)
 {
-    Symbolprobability * list = zc_create_probability("aaaaa+boop+boop+cccc!");
+    Symbolprobability * list = zc_create_probability("aaaaa+boop+boop+ccc!");
 
     Queue * queue = zc_create_queue(list);
 
     HffmanTree * tree = zc_create_tree(queue);
 
-    preorderTraversal(tree->root,1);
+//    zc_preorderTraversal(tree->root,1);
+    
+    HffmanTable * table = zc_createTable(tree);
+    
+    zc_encode(table,"aaacc!");
+
+    zc_decode(tree,"0011111000111");
 
     return 1;
     
     //We build the tree depending on the string
-    htTree *codeTree = buildTree("aaaaa boop boop ccc!");
+    htTree *codeTree = buildTree("aaaaa+boop+boop+ccc!");
     
     //We build the table depending on the Huffman tree
     hlTable *codeTable = buildTable(codeTree);
