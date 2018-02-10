@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A30CC715202411A600EE6285 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A30CC714202411A600EE6285 /* main.m */; };
-		A3F910BA202B06A30034B650 /* huffman.c in Sources */ = {isa = PBXBuildFile; fileRef = A3F910B9202B06A30034B650 /* huffman.c */; };
-		A3F910BD202B070D0034B650 /* pQueue.c in Sources */ = {isa = PBXBuildFile; fileRef = A3F910BC202B070D0034B650 /* pQueue.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,10 +25,6 @@
 /* Begin PBXFileReference section */
 		A30CC711202411A600EE6285 /* XXhh */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = XXhh; sourceTree = BUILT_PRODUCTS_DIR; };
 		A30CC714202411A600EE6285 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A3F910B8202B06A30034B650 /* huffman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = huffman.h; sourceTree = "<group>"; };
-		A3F910B9202B06A30034B650 /* huffman.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = huffman.c; sourceTree = "<group>"; };
-		A3F910BB202B070D0034B650 /* pQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pQueue.h; sourceTree = "<group>"; };
-		A3F910BC202B070D0034B650 /* pQueue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pQueue.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,10 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				A30CC714202411A600EE6285 /* main.m */,
-				A3F910B8202B06A30034B650 /* huffman.h */,
-				A3F910B9202B06A30034B650 /* huffman.c */,
-				A3F910BB202B070D0034B650 /* pQueue.h */,
-				A3F910BC202B070D0034B650 /* pQueue.c */,
 			);
 			path = XXhh;
 			sourceTree = "<group>";
@@ -129,9 +119,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3F910BD202B070D0034B650 /* pQueue.c in Sources */,
 				A30CC715202411A600EE6285 /* main.m in Sources */,
-				A3F910BA202B06A30034B650 /* huffman.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

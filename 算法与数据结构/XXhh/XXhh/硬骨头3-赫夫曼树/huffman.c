@@ -34,7 +34,6 @@ void traverseTree(htNode *treeNode, hlTable **table, int k, char code[256])
             (*table)->last->next = aux;
             (*table)->last = aux;
         }
-        
     }
     
     //We concatenate a 0 for each step to the left
@@ -42,14 +41,12 @@ void traverseTree(htNode *treeNode, hlTable **table, int k, char code[256])
     {
         code[k]='0';
         traverseTree(treeNode->left,table,k+1,code);
-        
     }
     //We concatenate a 1 for each step to the right
     if(treeNode->right!=NULL)
     {
         code[k]='1';
         traverseTree(treeNode->right,table,k+1,code);
-        
     }
 }
 
@@ -66,7 +63,7 @@ hlTable * buildTable(htTree * huffmanTree)
     int k=0;
     
     //We traverse the tree and calculate the codes
-    traverseTree(huffmanTree->root,&table,k,code);
+    traverseTree(huffmanTree->root,&table,k,code);//zc to do:k 怎么变小的
     return table;
 }
 
