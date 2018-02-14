@@ -106,6 +106,8 @@ bool needSerach(int point){
     return true;
 }
 
+//最小向中心靠拢
+
 void zc_prim_find_path(MGraph *map){
     
     if (getPathCount >= 6) {
