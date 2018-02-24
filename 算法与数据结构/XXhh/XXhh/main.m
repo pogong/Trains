@@ -6,15 +6,28 @@
 //  Copyright © 2018年 张三弓. All rights reserved.
 //
 
+/*
+ 弧是活动,顶点是事件(事件是一个瞬间)
+ 
+ 关键路劲:权值总和最大的路径
+ 
+ etv(Earliest Time Of Vertex)：事件最早发生时间，就是顶点的最早发生时间；
+ ltv(Latest Time Of Vertex)：事件最晚发生时间，就是每个顶点对应的事件最晚需要开始的时间，如果超出此时间将会延误整个工期。
+ 
+ ete(Earliest Time Of Edge)：活动的最早开工时间，就是弧的最早发生时间。
+ lte(Latest Time Of Edge)：活动的最晚发生时间，就是不推迟工期的最晚开工时间。
+ */
+
 #import <Foundation/Foundation.h>
 
 typedef enum {ERROR,OK} Status;
 
-#define MAXVEX 15
+#define MAXVEX 9
 
 // 边表结点声明
 typedef struct EdgeNode
 {
+    int weight;
     int adjvex;
     struct EdgeNode *next;
 }EdgeNode;
@@ -33,56 +46,6 @@ typedef struct
     int numVertexes, numEdges;
 }graphAdjList, *GraphAdjList;
 
-// 拓扑排序算法
-// 若GL无回路，则输出拓扑排序序列并返回OK，否则返回ERROR
-Status TopologicalSort(GraphAdjList GL)
-{
-    EdgeNode *e;
-    int k, gettop;
-    int top = 0;        // 用于栈指针下标索引
-    int count = 0;        // 用于统计输出顶点的个数
-    int *stack;            // 用于存储入度为0的顶点
-    
-    stack = (int *)malloc(GL->numVertexes * sizeof(int));
-    
-    for(int i=0; i < GL->numVertexes; i++ )
-    {
-        if( 0 == GL->adjList[i].in )
-        {
-            stack[++top] = i;    // 将度为0的顶点下标入栈
-//            printf("入栈 ==> %d\n",i);
-        }
-    }
-    
-    while( 0 != top )
-    {
-        gettop = stack[top--];    // 出栈
-//        printf("出栈 ====> %d\n",gettop);
-        printf("%d -> ", GL->adjList[gettop].data+1);
-        count++;
-        
-        for(EdgeNode * e=GL->adjList[gettop].firstedge; e; e=e->next )
-        {
-            k = e->adjvex;
-
-            if( !(--GL->adjList[k].in) )
-            {
-                stack[++top] = k;
-//                printf("%d 入栈 ==> %d\n",gettop,k);
-            }
-        }
-    }
-    
-    if( count < GL->numVertexes )    // 如果count小于顶点数，说明存在环
-    {
-        return ERROR;
-    }
-    else
-    {
-        return OK;
-    }
-}
-
 EdgeNode * createEdgeNode(int i){
     EdgeNode * eNode = (EdgeNode *)malloc(sizeof(EdgeNode));
     eNode->adjvex = i;
@@ -94,128 +57,225 @@ void setLink0(AdjList vertexNodeList){
     VertexNode * vertexNode0 = &vertexNodeList[0];
     
     EdgeNode * node1 = createEdgeNode(1);
+    node1->weight = 6;
     EdgeNode * node2 = createEdgeNode(2);
+    node2->weight = 4;
     EdgeNode * node3 = createEdgeNode(3);
+    node3->weight = 5;
     
     vertexNode0->firstedge = node1;
     node1->next = node2;
     node2->next = node3;
 }
 
+void setLink1(AdjList vertexNodeList){
+    VertexNode * vertexNode1 = &vertexNodeList[1];
+    
+    EdgeNode * node4 = createEdgeNode(4);
+    node4->weight = 1;
+    
+    vertexNode1->firstedge = node4;
+}
+
 void setLink2(AdjList vertexNodeList){
     VertexNode * vertexNode2 = &vertexNodeList[2];
     
-    EdgeNode * node5 = createEdgeNode(5);
-    EdgeNode * node6 = createEdgeNode(6);
-    EdgeNode * node8 = createEdgeNode(8);
-    EdgeNode * node9 = createEdgeNode(9);
+    EdgeNode * node4 = createEdgeNode(4);
+    node4->weight = 1;
     
-    vertexNode2->firstedge = node5;
-    node5->next = node6;
-    node6->next = node8;
-    node8->next = node9;
+    vertexNode2->firstedge = node4;
 }
 
 void setLink3(AdjList vertexNodeList){
     VertexNode * vertexNode3 = &vertexNodeList[3];
     
+    EdgeNode * node5 = createEdgeNode(5);
+    node5->weight = 2;
+    
+    vertexNode3->firstedge = node5;
+}
+
+void setLink4(AdjList vertexNodeList){
+    VertexNode * vertexNode4 = &vertexNodeList[4];
+    
     EdgeNode * node6 = createEdgeNode(6);
+    node6->weight = 7;
     EdgeNode * node7 = createEdgeNode(7);
-    EdgeNode * node9 = createEdgeNode(9);
-    vertexNode3->firstedge = node6;
+    node7->weight = 5;
+    
+    vertexNode4->firstedge = node6;
     node6->next = node7;
-    node7->next = node9;
 }
 
-void setLink9(AdjList vertexNodeList){
-    VertexNode * vertexNode9 = &vertexNodeList[9];
+void setLink5(AdjList vertexNodeList){
+    VertexNode * vertexNode5 = &vertexNodeList[5];
     
-    EdgeNode * node6_2 = createEdgeNode(6);
-    EdgeNode * node10 = createEdgeNode(10);
-    vertexNode9->firstedge = node6_2;
-    node6_2->next = node10;
+    EdgeNode * node7 = createEdgeNode(7);
+    node7->weight = 4;
+    
+    vertexNode5->firstedge = node7;
 }
 
-void setLink10(AdjList vertexNodeList){
-    VertexNode * vertexNode10 = &vertexNodeList[10];
+void setLink6(AdjList vertexNodeList){
+    VertexNode * vertexNode6 = &vertexNodeList[6];
     
-    EdgeNode * node11 = createEdgeNode(11);
-    vertexNode10->firstedge = node11;
+    EdgeNode * node8 = createEdgeNode(8);
+    node8->weight = 2;
+    
+    vertexNode6->firstedge = node8;
 }
 
-void setLink12(AdjList vertexNodeList){
-    VertexNode * vertexNode12 = &vertexNodeList[12];
+void setLink7(AdjList vertexNodeList){
+    VertexNode * vertexNode7 = &vertexNodeList[7];
     
-    EdgeNode * node12 = createEdgeNode(13);
-    EdgeNode * node3_2 = createEdgeNode(3);
-    vertexNode12->firstedge = node12;
-    node12->next = node3_2;
+    EdgeNode * node8 = createEdgeNode(8);
+    node8->weight = 2;//zc change 4->2
+    
+    vertexNode7->firstedge = node8;
 }
 
-void setLink13(AdjList vertexNodeList){
-    VertexNode * vertexNode13 = &vertexNodeList[13];
+int *etv, *ltv;
+int *stack2;            // 用于存储拓扑序列的栈
+int top2;                // 用于stack2的栈顶指针
+
+Status TopologicalSort(GraphAdjList GL)
+{
+    EdgeNode *e;
+    int i, k, gettop;
+    int top = 0;
+    int count = 0;
+    int *stack;
     
-    EdgeNode * node1 = createEdgeNode(1);
-    EdgeNode * node2 = createEdgeNode(2);
-    EdgeNode * node14 = createEdgeNode(14);
-    vertexNode13->firstedge = node1;
-    node1->next = node2;
-    node2->next = node14;
+    stack = (int *)malloc(GL->numVertexes * sizeof(int));
+    
+    for( i=0; i < GL->numVertexes; i++ )
+    {
+        if( 0 == GL->adjList[i].in )
+        {
+            stack[++top] = i;
+        }
+    }
+    
+    top2 = 0;
+    etv = (int *)malloc(GL->numVertexes*sizeof(int));
+    for( i=0; i < GL->numVertexes; i++ )
+    {
+        etv[i] = 0;
+    }
+    stack2 = (int *)malloc(GL->numVertexes*sizeof(int));
+    
+    while( 0 != top )
+    {
+        gettop = stack[top--];
+        stack2[++top2] = gettop;
+        count++;
+        
+        for( e=GL->adjList[gettop].firstedge; e; e=e->next )
+        {
+            k = e->adjvex;
+            
+            if( !(--GL->adjList[k].in) )
+            {
+                stack[++top] = k;
+            }
+            
+            //录入etv
+            if( (etv[gettop]+e->weight) > etv[k] )
+            {
+                etv[k] = etv[gettop] + e->weight;
+            }
+        }
+    }
+    
+    if( count < GL->numVertexes )
+    {
+        return ERROR;
+    }
+    else
+    {
+        return OK;
+    }
 }
 
-void setLink14(AdjList vertexNodeList){
-    VertexNode * vertexNode14 = &vertexNodeList[14];
+// 求关键路径，GL为有向图，输出GL的各项关键活动
+void CriticalPath(GraphAdjList GL)
+{
+    EdgeNode *e;
+    int i, gettop, k, j;
+    int ete, lte;
     
-    EdgeNode * node4 = createEdgeNode(4);
-    vertexNode14->firstedge = node4;
+    // 调用改进后的拓扑排序，求出etv和stack2的值
+    TopologicalSort(GL);
+    
+    // 初始化ltv都为汇点的时间
+    ltv = (int *)malloc(GL->numVertexes*sizeof(int));
+    for( i=0; i < GL->numVertexes; i++ )
+    {
+        ltv[i] = etv[GL->numVertexes-1];
+    }
+    
+    // 从汇点倒过来逐个计算ltv
+    while( 0 != top2 )
+    {
+        gettop = stack2[top2--];    // 注意，第一个出栈是'汇点',由后向前推导
+        for( e=GL->adjList[gettop].firstedge; e; e=e->next )
+        {
+            k = e->adjvex;
+            if( (ltv[k] - e->weight) < ltv[gettop] )
+            {
+                ltv[gettop] = ltv[k] - e->weight;
+            }
+        }
+    }
+    
+    // 通过etv和ltv求ete和lte
+    for( j=0; j < GL->numVertexes; j++ )
+    {
+        for( e=GL->adjList[j].firstedge; e; e=e->next )
+        {
+            k = e->adjvex;
+            ete = etv[j];
+            lte = ltv[k] - e->weight;
+            
+            if( ete == lte )
+            {
+                printf("<v%d,v%d> length: %d , ", GL->adjList[j].data+1, GL->adjList[k].data+1, e->weight );
+            }
+        }
+    }
 }
 
 int main(void)
 {
-    int inArr[15]  = {0,2,2,2,1,1,3,1,1,2,1,1,0,1,1};
+    int inArr[9]  = {0,1,1,1,2,1,1,2,2};
+    
     AdjList vertexNodeList = {0};
     
-    for (int i = 0; i<15; i++) {
+    for (int i = 0; i<9; i++) {
         VertexNode * node = &vertexNodeList[i];
         node->in = inArr[i];
         node->data = i;
         node->firstedge = NULL;
     }
     
-    //0 3
     setLink0(vertexNodeList);
-
-    //2 4
+    setLink1(vertexNodeList);
     setLink2(vertexNodeList);
-    
-    //3 1
     setLink3(vertexNodeList);
-    
-    //9 2
-    setLink9(vertexNodeList);
-    
-    //10 1
-    setLink10(vertexNodeList);
-    
-    //12 2
-    setLink12(vertexNodeList);
-    
-    //13 3 //1 2 14
-    setLink13(vertexNodeList);
-    
-    //14 1
-    setLink14(vertexNodeList);
+    setLink4(vertexNodeList);
+    setLink5(vertexNodeList);
+    setLink6(vertexNodeList);
+    setLink7(vertexNodeList);
     
     GraphAdjList ad = (graphAdjList *)malloc(sizeof(graphAdjList));
-//    ad->adjList = vertexNodeList;//数组不能直接那么写
     
-    for (int i = 0; i<15; i++) {
+    for (int i = 0; i<9; i++) {
         ad->adjList[i] = vertexNodeList[i];
     }
-    ad->numEdges = 19;
-    ad->numVertexes = 15;
+    ad->numEdges = 11;
+    ad->numVertexes = 9;
     
-    TopologicalSort(ad);
+    CriticalPath(ad);
     
     printf("\n");
     
