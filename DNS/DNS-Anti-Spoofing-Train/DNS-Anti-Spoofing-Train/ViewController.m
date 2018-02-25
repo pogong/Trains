@@ -27,9 +27,13 @@
 
 
 - (IBAction)btnPress:(UIButton *)sender {
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://maps.googleapis.com/maps/api/geocode/json?address=San%20Francisco,%20CA&sensor=false"]];
     
-//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.jianshu.com/p/688141d260ec"]];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://maps.googleapis.com/maps/api/geocode/json?address=San%20Francisco,%20CA&sensor=false"]]; //得翻墙
+    
+//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com/"]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.jianshu.com/p/688141d260ec"]];
+    
+    //http https 都ok
     
     NSMutableURLRequest * mu = [request mutableCopy];
     mu.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;

@@ -29,9 +29,10 @@ static NSString * const URLProtocolHandledKey = @"URLProtocolHandledKey";
     
     //http和https都会出现dns劫持情况，都需要处理//zc limit 1:scheme
     NSString *scheme = [[request URL] scheme];
-    if (([scheme caseInsensitiveCompare:@"http"] == NSOrderedSame)) {
+    if ([scheme caseInsensitiveCompare:@"http"] == NSOrderedSame ||
+        [scheme caseInsensitiveCompare:@"https"] == NSOrderedSame) {
         // 判断请求是否为白名单//zc limit 2:domain name
-        NSArray *whiteLists = @[@"baidu.com",@"qq.com",@"maps.googleapis.com"];
+        NSArray *whiteLists = @[@"baidu.com",@"qq.com",@"maps.googleapis.com",@"jianshu.com"];
         if (whiteLists && [whiteLists isKindOfClass:[NSArray class]]) {
             for (NSString *url in whiteLists) {
                 if (request.URL.host && [request.URL.host hasSuffix:url]) {
@@ -166,6 +167,7 @@ static inline SecTrustRef AFChangeHostForTrust(SecTrustRef trust, NSString * tru
 #endif
 }
 
+//zc 根据https://github.com/AFNetworking/AFNetworking/issues/2954 改的
 - (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
     if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
@@ -175,7 +177,7 @@ static inline SecTrustRef AFChangeHostForTrust(SecTrustRef trust, NSString * tru
 
         /* 添加可信任的域名,以支持:直接使用ip访问特定https服务器.
          Add trusted domain name to support: direct use of IP access specific HTTPS server.*/
-        for (NSString * trustHostname  in @[@"baidu.com",@"qq.com",@"maps.googleapis.com"]) {
+        for (NSString * trustHostname  in @[@"baidu.com",@"qq.com",@"maps.googleapis.com",@"jianshu.com"]) {
             serverTrust =  AFChangeHostForTrust(serverTrust, trustHostname);
         }
 
