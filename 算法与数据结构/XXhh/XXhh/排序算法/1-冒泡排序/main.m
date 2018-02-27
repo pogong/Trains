@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+//冒泡排序
+
 //不正宗的冒泡排序
 void BubbleSort1(int k[],int n){
     
