@@ -217,6 +217,7 @@ Status zc_deleteNode(BitNode * root, int key){
     
     BitNode ** aim = NULL;
     
+    //最终目的:找到指向'目标节点的地址'的地址,这个地址才是要改动的(找到'目标节点的地址'是没用的.如果目标节点是左孩子,找的是目标节点的父节点的左孩子的地址)
     zc_findAA(&root, key,&aim);//得二级指针的值,用三级指针.我也害怕,xix
     
     Delete(aim);
