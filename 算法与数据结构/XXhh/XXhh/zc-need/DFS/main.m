@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 /*
- BFS:广度优先遍历==>类似树的层遍历
+ DFS:深度优先遍历==>树的前序遍历
  
  */
 
@@ -81,85 +81,22 @@ void CreateMGraph(MGraph *G)
     
 }
 
-typedef struct _QueueNode{
-    char pointData;
-    int index;
-    struct _QueueNode * next;
-}QueueNode;
+Boolean visited[MAXVEX];  //zc remain:看小甲鱼的教程改进的
 
-typedef struct _Queue{
-    QueueNode * first;
-    QueueNode * last;
-}Queue;
-
-//void zc_dfs(int index,MGraph *G){
-//
-//    printf("%c\n",G->vexs[index]);
-//    visited[index] = true;
-//
-//    for(int i = 0; i < MAXVEX; i++)
-//    {
-//        if (G->arc[index][i] > 0) {
-//
-//            if (visited[i] == false) {
-//                zc_dfs(i,G);
-//            }
-//
-//        }
-//    }
-//}
-
-bool visited[MAXVEX];
-
-void zc_addQueueNode(int i,Queue * queue,MGraph * map){
-    QueueNode * one = (QueueNode *)malloc(sizeof(QueueNode));
-    one->pointData = map->vexs[i];
-    one->next = NULL;
-    one->index = i;
+void zc_dfs(int index,MGraph *G){
     
-    visited[i] = true;
+    printf("%c\n",G->vexs[index]);
+    visited[index] = true;
     
-    if (queue->first == NULL) {
-        
-        queue->first = one;
-        queue->last = one;
-        
-    }else{
-        
-        queue->last->next = one;
-        queue->last = one;
-        
-    }
-    
-}
-
-void zc_bfs(MGraph * map,Queue *queue){
-
-    if (queue->first == NULL) {
-        printf("广度遍历完毕\n");
-    }else{
-        
-        int index = queue->first->index;
-        
-        printf("%c\n",queue->first->pointData);
-        
-        if (queue->first == queue->last) {
-            queue->first = NULL;
-            queue->last = NULL;
-        }else{
-            queue->first = queue->first->next;
-        }
-        
-        for(int i = 0; i < MAXVEX; i++)
-        {
-            if (map->arc[index][i] > 0 && visited[i] == false) {
-                
-                zc_addQueueNode(i,queue,map);
-              
+    for(int i = 0; i < MAXVEX; i++)
+    {
+        if (G->arc[index][i] > 0) {
+            
+            if (visited[i] == false) {
+                zc_dfs(i,G);
             }
+            
         }
-
-        zc_bfs(map,queue);
     }
 }
 
@@ -169,11 +106,7 @@ int main(void)
     
     CreateMGraph(map);
     
-    Queue *queue = (Queue *)malloc(sizeof(Queue));
-    
-    zc_addQueueNode(0,queue,map);
-    
-    zc_bfs(map,queue);
+    zc_dfs(0,map);
     
     return 0;
 }
